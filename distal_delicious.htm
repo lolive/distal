@@ -1,0 +1,46 @@
+<html>
+<title>Distal demo - Loading JSON from Delicious bookmarks</title>
+<style type="text/css">
+table, td, tr {border:1px solid #ddd; border-collapse:collapse}
+p {margin:2em 1em}
+</style>
+<script src="distal.js"></script>
+<script>
+var data = {};
+var once = false;
+
+function getJSON() {
+  if(once) return;
+  once = true;
+  document.getElementById("download").innerHTML = "Loading...";
+  document.body.appendChild(document.createElement("script")).src = "http://feeds.delicious.com/v2/json/tag/javascript?callback=callback&count=20";
+}
+
+function callback(j) {
+  data.list = j;
+  document.getElementById("download").style.display = "none";
+  document.getElementById("distal").style.display = "";
+}
+</script>
+<body>
+<p>
+<a href="javascript:getJSON();" id="download">Download JSON bookmarks from delicious.com</a>
+<a href="javascript:distal(document.body,data);" id="distal" style="display:none"><b>Run Distal</b></a>
+</p>
+
+<table style="width:90%" cellpadding=3>
+  <tr>
+    <th>Author</th><th>Title</th><th>Tags</th>
+  </tr>
+  <tr qrepeat="n list">
+    <td qtext="n.a" qattr="title n.dt">-</td>
+    <td><a href="#" qattr="href n.u" qtext="n.d">-</td>
+    <td><select><option qrepeat="t n.t" qattr="text t">-</select></td>
+  </tr>
+</table>
+
+<p>Click on Download to download JSON data from the Delicious.com website.
+<br>Then click Run to Distal the JSON on to this page.
+</p>
+</body>
+</html>
