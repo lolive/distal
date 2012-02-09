@@ -27,7 +27,7 @@ function distal(root, obj) {
   //optimize comparison check
   var innerText = "innerText" in root ? "innerText" : "textContent";
   //attributes which don't support setAttribute()
-  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, disabled:1};
+  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, label:1, text:1, disabled:1};
 
   var getProp = function(s) {return this[s];};
 
@@ -64,7 +64,7 @@ function distal(root, obj) {
 
     //when finished with the current list, there are generated nodes and
     //their children that need to be processed.
-    if(!node && (list = listStack.pop())) {
+    while(!node && (list = listStack.pop())) {
       pos = posStack.pop();
       node = list[pos++];
     }
@@ -148,10 +148,6 @@ function distal(root, obj) {
       }
 
       if(objList.length > 1) {
-        //optimize accessing the array with a fully qualified pathname
-        //obj["a.b.c"] = []
-        obj[attr2[1]] = objList;
-
         //we need to duplicate this node x number of times. But instead
         //of calling cloneNode x times, we get the outerHTML and repeat
         //that x times, then innerHTML it which is faster
@@ -180,10 +176,10 @@ function distal(root, obj) {
         //workaround for IE which can't innerHTML tables and selects
         if("cells" in node) {  //TR
           tmpNode.innerHTML = "<table>" + html + "<\/table>";
-          tmpNode = tmpNode.firstChild.rows;
+          tmpNode = tmpNode.firstChild.tBodies[0].childNodes;
         } else if("cellIndex" in node) {  //TD
           tmpNode.innerHTML = "<table><tr>" + html + "<\/tr><\/table>";
-          tmpNode = tmpNode.firstChild.firstChild.cells;
+          tmpNode = tmpNode.firstChild.tBodies[0].firstChild.childNodes;
         } else if("selected" in node && "text" in node) {  //OPTION
           tmpNode.innerHTML = "<select>" + html + "<\/select>";
           tmpNode = tmpNode.firstChild.options;
@@ -218,11 +214,13 @@ function distal(root, obj) {
             //the root node so the newly created nodes are adjacent to the root
             //and so won't appear in the NodeList, or (2) we are dealing with a
             //non-live NodeList, so we need to add them to the listStack
-            html.qdup = 1;
             listStack.push(querySelectorAll ? html.querySelectorAll(TAL) : html.getElementsByTagName("*"));
             posStack.push(0);
+
             listStack.push([html]);
             posStack.push(0);
+
+            html.qdup = 1;
             frag.appendChild(html);
           }
         } else {
@@ -267,27 +265,21 @@ function distal(root, obj) {
 
     attr = node.getAttribute("qtext");
     if(attr) {
-      attr = attr.split(" ");
-      if(attr[1] && attr[0] == "html") {
+      if(attr.indexOf("html ") == 0) {
+        attr = attr.split(" ");
         node.innerHTML = resolve(obj, attr[1]) || "";
       } else {
-        node["value" in node ? "value" : innerText] = resolve(obj, attr[0]) || "";
+        node["value" in node ? "value" : innerText] = resolve(obj, attr) || "";
       }
     }
-
   }  //end while
 }
 
-//follows the dot notation path to find an object within an object
+//follows the dot notation path to find an object within an object: obj["a"]["b"]["1"] = c;
 distal.resolve = function(obj, seq, x) {
   //if fully qualified path is at top level: obj["a.b.d"] = c
   if((x = obj[seq])) return x;
 
-  //if next to last path is at top level: obj["a.b"].1 = c
-  //this is an optimization for array access for repeated nodes
-  if((x = obj[seq.substr(0, seq.lastIndexOf("."))])) return x[seq.substr(seq.lastIndexOf(".") + 1)];
-
-  //otherwise trace through paths: obj["a"]["b"]["1"] = c;
   seq = seq.split(".");
   x = 0;
   while(seq[x] && (obj = obj[seq[x++]]) );
