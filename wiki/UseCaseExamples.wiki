@@ -1,0 +1,19 @@
+#summary Use Cases for Distal
+#labels Featured
+
+== Updating a section of your page with Sports Scores ==
+<code language="xml">
+<table id="scoreboard"> 
+  <tr><th>Team</th><th>Team</th></tr> 
+  <tr qrepeat="m scores"> 
+    <td><span qtext="m.ateam.name"></span> - <span qtext="m.ateam.score"></span></td> 
+    <td><span qtext="m.bteam.name"></span> - <span qtext="m.bteam.score"></span></td> 
+  </tr> 
+</table></code>
+<code language="javascript">
+distal(document.getElementById("scoreboard"), {scores: [
+    {ateam: {name: "JFK", score: 4}, bteam: {name: "LAX", score: 2}},
+    {ateam: {name: "LHR", score: 0}, bteam: {name: "SGN", score: 1}},
+    {ateam: {name: "NRT", score: 1}, bteam: {name: "HKG", score: 2}},
+    {ateam: {name: "BOM", score: 3}, bteam: {name: "IGU", score: 5}}
+]}); </code>
