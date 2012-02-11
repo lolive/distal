@@ -1,7 +1,8 @@
 #summary Use Cases for Distal
 #labels Featured
+Below are a number of use case examples to demonstrate how to use Distal:
 
-== Updating a section of your page with Sports Scores ==
+=== Updating a section of your page with sports scores ===
 <code language="xml">
 <table id="scoreboard"> 
   <tr><th>Team</th><th>Team</th></tr> 
@@ -17,3 +18,30 @@ distal(document.getElementById("scoreboard"), {scores: [
     {ateam: {name: "NRT", score: 1}, bteam: {name: "HKG", score: 2}},
     {ateam: {name: "BOM", score: 3}, bteam: {name: "IGU", score: 5}}
 ]}); </code>
+
+===Updating toolbar button States===
+<code language="xml"><div id="toolbar"> 
+  <input type="button" value="Copy" qattr="disabled nocopy"> 
+  <input type="button" value="Paste" qattr="disabled nopaste"> 
+  <input type="button" value="Bold" qattr="class bold"> 
+  <input type="button" value="Italic" qattr="class italic"> 
+</div></code>
+<code language="javascript">
+distal(document.getElementById("toolbar"), {
+    nocopy: true, nopaste: false, bold: "b", italic: "i"
+}); </code>
+
+===Flipping through content===
+<code language="xml"><div qif="page1"> 
+  Welcome! Click "Next" to start. 
+</div> 
+<div qif="page2"> 
+  Your generated password is: <span qtext="page2.pwd"> </span> 
+</div></code>
+<code language="javascript">
+distal(document.body, { 
+    page1: null, 
+    page2: { 
+        pwd: "swordfish"
+    }
+}); </code>
