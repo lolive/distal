@@ -22,12 +22,19 @@ function distal(root, obj) {
   var node = root;
   var doc = root.ownerDocument;
   var querySelectorAll = !!root.querySelectorAll;
-  //TAL attributes for querySelectorAll call
-  var TAL = "*[qdef],*[qif],*[qrepeat],*[qattr],*[qtext]";
   //optimize comparison check
   var innerText = "innerText" in root ? "innerText" : "textContent";
   //attributes which don't support setAttribute()
-  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, label:1, text:1, disabled:1};
+  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, label:1, htmlFor:1, text:1, disabled:1};
+
+  //TAL attributes for querySelectorAll call
+  var qdef = distal;
+  var qif = qdef.qif || "qif";
+  var qrepeat = qdef.qrepeat || "qrepeat";
+  var qattr = qdef.qattr || "qattr";
+  var qtext = qdef.qtext || "qtext";
+  qdef = qdef.qdef || "qdef";
+  var TAL = "*[" + [qdef, qif, qrepeat, qattr, qtext].join("],*[") + "]";  
 
   var getProp = function(s) {return this[s];};
 
@@ -74,7 +81,7 @@ function distal(root, obj) {
     //creates a shortcut to an object
     //e.g., <section qdef="feeds main.sidebar.feeds">
 
-    attr = node.getAttribute("qdef");
+    attr = node.getAttribute(qdef);
     if(attr) {
       attr = attr.split(" ");
       //add it to the object as a property
@@ -84,7 +91,7 @@ function distal(root, obj) {
     //shown if object is truthy
     //e.g., <img qif="item.unread">
 
-    attr = node.getAttribute("qif");
+    attr = node.getAttribute(qif);
     if(attr) {
       var obj2 = resolve(obj, attr.split("not:").pop());
 
@@ -113,7 +120,7 @@ function distal(root, obj) {
     //of the loop.
     //e.g., <div qrepeat="item feeds.items">
 
-    attr = node.getAttribute("qrepeat");
+    attr = node.getAttribute(qrepeat);
     if(attr) {
       var attr2 = attr.split(" ");
       var tmpNode;
@@ -155,16 +162,16 @@ function distal(root, obj) {
         for(var i = len; i > 0; i--) html[len - i] = i;
 
         var tmpNode = node.cloneNode(true);
-        tmpNode.setAttribute("qdef", attr);
-        tmpNode.removeAttribute("qrepeat");
+        tmpNode.setAttribute(qdef, attr);
+        tmpNode.removeAttribute(qrepeat);
         tmpNode.setAttribute("qdup", "1");
         tmpNode = tmpNode.outerHTML || 
           doc.createElement("div").appendChild(tmpNode).parentNode.innerHTML;
 
         //we're doing something like this:
         //html = "<div qdef=" + [1,2,3].join("><div qdef=") + ">"
-        var prefix = tmpNode.indexOf(' qdef="' + attr + '"');
-        if(prefix == -1) prefix = tmpNode.indexOf(" qdef='" + attr + "'");
+        var prefix = tmpNode.indexOf(' '+qdef+'="' + attr + '"');
+        if(prefix == -1) prefix = tmpNode.indexOf(" "+qdef+"='" + attr + "'");
         prefix = prefix + 7 + attr.length;
 
         html = tmpNode.substr(0, prefix) + "." + 
@@ -196,16 +203,19 @@ function distal(root, obj) {
           //value later, if the become redefined.
           listStack.push(list);
           posStack.push(pos);
-          //clear the current list so that in the next round we grab another list
-          //off the stack
-          list = [];
 
           //add this node to the stack so that it is processed right before we pop the
           //main list off the stack. This will be the last node to be processed and we 
           //use it to assign our repeat variable to array index 0 so that the node's
           //children, which are also at array index 0, will be processed correctly
-          listStack.push([{qdef:attr + ".0", getAttribute:getProp}]);
+          list = {getAttribute:getProp};
+          list[qdef] = attr + ".0";
+          listStack.push([list]);
           posStack.push(0);
+
+          //clear the current list so that in the next round we grab another list
+          //off the stack
+          list = [];
 
           for(var i = tmpNode.length - 1; i >= 0; i--) {
             html = tmpNode[i];
@@ -237,7 +247,7 @@ function distal(root, obj) {
     //set multiple attributes on the node
     //e.g., <div qattr="value item.text disabled item.disabled">
 
-    attr = node.getAttribute("qattr");
+    attr = node.getAttribute(qattr);
     if(attr) {
       attr = attr.split(" ");
       var name;
@@ -251,6 +261,7 @@ function distal(root, obj) {
             case "disabled":
             case "checked": node[name] = !!value; break;
             case "style": node.style.cssText = value; break;
+            case "text": node[querySelectorAll ? name : innerText] = value; break;  //option.text unstable in IE
             case "class": name = "className";
             default: node[name] = value;
           }
@@ -263,7 +274,7 @@ function distal(root, obj) {
     //sets the innerHTML on the node
     //e.g., <div qtext="html item.description">
 
-    attr = node.getAttribute("qtext");
+    attr = node.getAttribute(qtext);
     if(attr) {
       if(attr.indexOf("html ") == 0) {
         attr = attr.split(" ");
