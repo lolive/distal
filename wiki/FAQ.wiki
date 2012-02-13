@@ -5,3 +5,21 @@ Distal is an acronym for Dynamic Interface Simplified with Template Attribute La
 
 ===What's with the logo?===
 The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database). This is not to be taken literally. Always follow the rules of Model-View-Controller and abstraction.
+
+===Can I customize the attribute names?===
+If the attribute names are incompatible with your existing website, you can change them to your own custom name:
+<code language="javascript">
+<script src="distal.js"></script> 
+<script> 
+distal.qdef = "data-qdef"; 
+distal.qattr = "data-qattr"; 
+distal.qtext = "data-qtext"; 
+//... etc.
+</script>
+
+<div data-qattr="rss.feeds.title"></div>
+</code>
+This also helps if you want your page to pass the HTML5 doctype test.
+
+===How do you make it run so fast?===
+For modern browsers I use `querySelectorAll` and for IE6 I use `getElementsByTagName`. Since node access is expensive in IE, I avoid `firstChild, nextSibling`, and `parentNode` whenever possible. I use `innerHTML` over `cloneNode` and I use `createDocumentFragment` to group appends together.
