@@ -21,5 +21,8 @@ distal.qtext = "data-qtext";
 </code>
 This also helps if you want your page to pass the HTML5 doctype test.
 
+===Does it work with jQuery?===
+Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
+
 ===How do you make it run so fast?===
 For modern browsers I use `querySelectorAll` and for IE6 I use `getElementsByTagName`. Since node access is expensive in IE, I avoid `firstChild, nextSibling`, and `parentNode` whenever possible. I use `innerHTML` over `cloneNode` and I use `createDocumentFragment` to group appends together.
