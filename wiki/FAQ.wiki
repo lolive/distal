@@ -11,15 +11,15 @@ If the attribute names are incompatible with your existing website, you can chan
 <code language="javascript">
 <script src="distal.js"></script> 
 <script> 
-distal.qdef = "data-qdef"; 
-distal.qattr = "data-qattr"; 
-distal.qtext = "data-qtext"; 
+distal.qdef = "xdef"; 
+distal.qattr = "xattr"; 
+distal.qtext = "xtext"; 
 //... etc.
 </script>
 
-<div data-qattr="rss.feeds.title"></div>
+<div xattr="rss.feeds.title"></div>
 </code>
-This also helps if you want your page to pass the HTML5 doctype test.
+This also helps if you want shorten the attribute names to reduce file size.
 
 ===Does it work with jQuery?===
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
