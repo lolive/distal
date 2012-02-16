@@ -6,6 +6,9 @@ Distal is an acronym for Dynamic Interface Simplified with Template Attribute La
 ===What's with the logo?===
 The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database). This is not to be taken literally. Always follow the rules of Model-View-Controller and abstraction.
 
+===Why do the attributes start with "data"?===
+This is to make the HTML validate against the HTML doctype `<!DOCTYPE html>`.
+
 ===Can I customize the attribute names?===
 If the attribute names are incompatible with your existing website, you can change them to your own custom name:
 <code language="javascript">
