@@ -6,9 +6,9 @@ Below are a number of use case examples to demonstrate how to use Distal:
 <code language="xml">
 <table id="scoreboard"> 
   <tr><th>Team</th><th>Team</th></tr> 
-  <tr qrepeat="m scores"> 
-    <td><span qtext="m.ateam.name"></span> - <span qtext="m.ateam.score"></span></td> 
-    <td><span qtext="m.bteam.name"></span> - <span qtext="m.bteam.score"></span></td> 
+  <tr data-qrepeat="m scores"> 
+    <td><span data-qtext="m.ateam.name"></span> - <span data-qtext="m.ateam.score"></span></td> 
+    <td><span data-qtext="m.bteam.name"></span> - <span data-qtext="m.bteam.score"></span></td> 
   </tr> 
 </table></code>
 <code language="javascript">
@@ -21,10 +21,10 @@ distal(document.getElementById("scoreboard"), {scores: [
 
 ===Updating toolbar button States===
 <code language="xml"><div id="toolbar"> 
-  <input type="button" value="Copy" qattr="disabled nocopy"> 
-  <input type="button" value="Paste" qattr="disabled nopaste"> 
-  <input type="button" value="Bold" qattr="class bold"> 
-  <input type="button" value="Italic" qattr="class italic"> 
+  <input type="button" value="Copy" data-qattr="disabled nocopy"> 
+  <input type="button" value="Paste" data-qattr="disabled nopaste"> 
+  <input type="button" value="Bold" data-qattr="class bold"> 
+  <input type="button" value="Italic" data-qattr="class italic"> 
 </div></code>
 <code language="javascript">
 distal(document.getElementById("toolbar"), {
@@ -32,11 +32,11 @@ distal(document.getElementById("toolbar"), {
 }); </code>
 
 ===Flipping through content===
-<code language="xml"><div qif="page1"> 
+<code language="xml"><div data-qif="page1"> 
   Welcome! Click "Next" to start. 
 </div> 
-<div qif="page2"> 
-  Your generated password is: <span qtext="page2.pwd"> </span> 
+<div data-qif="page2"> 
+  Your generated password is: <span data-qtext="page2.pwd"> </span> 
 </div></code>
 <code language="javascript">
 distal(document.body, { 
