@@ -29,11 +29,11 @@ function distal(root, obj) {
 
   //TAL attributes for querySelectorAll call
   var qdef = distal;
-  var qif = qdef.qif || "qif";
-  var qrepeat = qdef.qrepeat || "qrepeat";
-  var qattr = qdef.qattr || "qattr";
-  var qtext = qdef.qtext || "qtext";
-  qdef = qdef.qdef || "qdef";
+  var qif = qdef.qif || "data-qif";
+  var qrepeat = qdef.qrepeat || "data-qrepeat";
+  var qattr = qdef.qattr || "data-qattr";
+  var qtext = qdef.qtext || "data-qtext";
+  qdef = qdef.qdef || "data-qdef";
   var TAL = "*[" + [qdef, qif, qrepeat, qattr, qtext].join("],*[") + "]";  
 
   var getProp = function(s) {return this[s];};
@@ -172,7 +172,7 @@ function distal(root, obj) {
         //html = "<div qdef=" + [1,2,3].join("><div qdef=") + ">"
         var prefix = tmpNode.indexOf(' '+qdef+'="' + attr + '"');
         if(prefix == -1) prefix = tmpNode.indexOf(" "+qdef+"='" + attr + "'");
-        prefix = prefix + 7 + attr.length;
+        prefix = prefix + qdef.length + 3 + attr.length;
 
         html = tmpNode.substr(0, prefix) + "." + 
           html.join(tmpNode.substr(prefix) + tmpNode.substr(0, prefix) + ".") + 
