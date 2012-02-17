@@ -34,14 +34,16 @@ function distal(root, obj) {
   var qattr = qdef.qattr || "data-qattr";
   var qtext = qdef.qtext || "data-qtext";
   qdef = qdef.qdef || "data-qdef";
-  var TAL = "*[" + [qdef, qif, qrepeat, qattr, qtext].join("],*[") + "]";  
+  var TAL = "*[" + [qdef, qif, qrepeat, qattr, qtext].join("],*[") + "]";
+  var html;
 
   var getProp = function(s) {return this[s];};
 
   //there may be generated node that are siblings to the root node if the root node 
   //itself was a repeater. Remove them so we don't have to deal with them later
+  var tmpNode = root.parentNode;
   while((node = root.nextSibling) && node.nodeType == 1 && (node.qdup || node.getAttribute("qdup"))) {
-    node.parentNode.removeChild(node);
+    tmpNode.removeChild(node);
   }
 
   //if we generate repeat nodes and are dealing with non-live NodeLists, then
@@ -52,6 +54,7 @@ function distal(root, obj) {
   var list;
   var pos = 0;
   var attr;
+  var attr2;
 
   //get a list of concerned nodes within this root node. If querySelectorAll is
   //supported we use that but it is treated differently because it is a non-live NodeList.
@@ -93,12 +96,13 @@ function distal(root, obj) {
 
     attr = node.getAttribute(qif);
     if(attr) {
-      var obj2 = resolve(obj, attr.split("not:").pop());
+      if( (attr2 = (attr.indexOf("not:") == 0)) ) attr = attr.substr(5);
+      var obj2 = resolve(obj, attr);
 
       //if obj is empty array it is still truthy, so make it the array length
       if(obj2 && obj2.length > -1) obj2 = !!obj2.length;
 
-      if(!!obj2 ^ !(attr.indexOf("not:") != 0)) {
+      if(!!obj2 ^ attr2) {
         node.style.display = "";
       } else {
         node.style.display = "none";
@@ -122,13 +126,13 @@ function distal(root, obj) {
 
     attr = node.getAttribute(qrepeat);
     if(attr) {
-      var attr2 = attr.split(" ");
-      var tmpNode;
+      attr2 = attr.split(" ");
 
       //if live NodeList, remove adjacent repeated nodes
       if(!querySelectorAll) {
+        html = node.parentNode;
         while((tmpNode = node.nextSibling) && tmpNode.nodeType == 1 && (tmpNode.qdup || tmpNode.getAttribute("qdup"))) {
-          tmpNode.parentNode.removeChild(tmpNode);
+          html.removeChild(tmpNode);
         }
       }
 
@@ -158,10 +162,10 @@ function distal(root, obj) {
         //we need to duplicate this node x number of times. But instead
         //of calling cloneNode x times, we get the outerHTML and repeat
         //that x times, then innerHTML it which is faster
-        var html = new Array(objList.length - 1), len = html.length;
+        html = new Array(objList.length - 1), len = html.length;
         for(var i = len; i > 0; i--) html[len - i] = i;
 
-        var tmpNode = node.cloneNode(true);
+        tmpNode = node.cloneNode(true);
         tmpNode.setAttribute(qdef, attr);
         tmpNode.removeAttribute(qrepeat);
         tmpNode.setAttribute("qdup", "1");
@@ -178,7 +182,7 @@ function distal(root, obj) {
           html.join(tmpNode.substr(prefix) + tmpNode.substr(0, prefix) + ".") + 
           tmpNode.substr(prefix);
 
-        var tmpNode = doc.createElement("div");
+        tmpNode = doc.createElement("div");
 
         //workaround for IE which can't innerHTML tables and selects
         if("cells" in node) {  //TR
