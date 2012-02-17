@@ -18,7 +18,7 @@ distal(document.getElementById("scoreboard"), {scores: [
     {ateam: {name: "NRT", score: 1}, bteam: {name: "HKG", score: 2}},
     {ateam: {name: "BOM", score: 3}, bteam: {name: "IGU", score: 5}}
 ]}); </code>
-
+----
 ===Updating toolbar button States===
 <code language="xml"><div id="toolbar"> 
   <input type="button" value="Copy" data-qattr="disabled nocopy"> 
@@ -30,7 +30,7 @@ distal(document.getElementById("scoreboard"), {scores: [
 distal(document.getElementById("toolbar"), {
     nocopy: true, nopaste: false, bold: "b", italic: "i"
 }); </code>
-
+----
 ===Flipping through content===
 <code language="xml"><div data-qif="page1"> 
   Welcome! Click "Next" to start. 
@@ -45,7 +45,7 @@ distal(document.body, {
         pwd: "swordfish"
     }
 }); </code>
-
+----
 ===Building a nested tree===
 <code language="xml"><ul> 
     <li data-qrepeat="H1 list"> 
@@ -92,3 +92,5 @@ var data = {
 };
 distal(document.body, data);
 </code>
+----
+If you have questions, please put them on the [http://code.google.com/p/distal/issues/list Issues] page instead of the comments area.
