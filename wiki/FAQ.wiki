@@ -5,6 +5,7 @@ Distal is an acronym for Dynamic Interface Simplified with Template Attribute La
 
 ===What's with the logo?===
 The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database). This is not to be taken literally. Always follow the rules of Model-View-Controller and abstraction.
+
 http://code.google.com/p/distal/logo?endswith=.png
 
 ===Why do the attributes start with "data"?===
