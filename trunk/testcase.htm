@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<title>Distal - test case</title>
+<script src="distal-dev.js"></script>
+<script>
+var data = {
+  list: ["one", "two", "three"],
+  listHTML: ["<b>&nbsp;apple</b>", "<i>banana&copy;</i>", "<u>carrot</u>"],
+  oneList: ["only one bullet!"],
+  emptyList: [],
+  nullList: null,
+  value: 5,
+  text: "brown fox jumped",
+  klass: "bluish",
+  ztyle: "background:pink",
+  truthy: true,
+  homepage: "http://www.google.com",
+  indented: {indented: {cool: "indented stuff"}}
+};
+
+</script>
+<style>
+body {font-size:11pt}
+p {margin:2em}
+td {padding:0; width:30%; vertical-align:top}
+ul {list-style-type:square; border:1px dashed #ccc}
+h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin:0 0 0.5em 0}
+.bluish {background:#aaf}
+</style>
+<body>
+
+<p><a href="javascript:distal(document.body,data);">Run Distal</a></p>
+
+<table cellspacing=5 border=0 width="100%">
+<tr>
+
+<td class="box"><h2>Test QREPEAT</h2>
+  <ul>
+    <li data-qrepeat="m list" data-qtext="m">(There will be 3 bullets)</li>
+  </ul>
+</td>
+
+<td class="box"><h2>Test QREPEAT with html</h2>
+  <ul>
+    <li data-qrepeat="m listHTML" data-qtext="html m">(There will be 3 html bullets)</li>
+    <li data-qrepeat="m listHTML" data-qtext="m">(There will be 3 escaped bullets)</li>
+  </ul>
+</td>
+
+<td class="box"><h2>Test QREPEAT with SELECT</h2>
+  <select size=4>
+    <option data-qrepeat="m list" data-qattr="text m">(There will be 3 options)</option>
+  </select>
+</td>
+
+</tr><tr>
+
+<td class="box"><h2>Test QREPEAT with array length 1</h2>
+  <ul>
+    <li data-qrepeat="m oneList" data-qtext="m">(There will be 1 bullet)</li>
+  </ul>
+</td>
+
+<td class="box"><h2>Test QREPEAT with array null</h2>
+  <ul>
+    <li>there will only be 1 bullet
+      <ol><li data-qrepeat="m nullList" data-qtext="m">(this will not show)</li></ol>
+    </li>
+  </ul>
+</td>
+
+<td class="box"><h2>Test QREPEAT with table</h2>
+  <table border=1>
+    <tr><th>Age</th></tr>
+    <tr data-qrepeat="m list"><td data-qtext="m">(test)</td></tr>
+  </table>
+</td>
+
+</tr>
+<tr>
+
+<td class="box"><h2>Test QIF</h2>
+  <ul>
+    <li data-qif="value gt 3">5 &gt; 3</li>
+    <li data-qif="value gt 4">5 &gt; 4</li>
+    <li data-qif="value gt 4.5">5 &gt; 4.5</li>
+    <li data-qif="value lt 4">5 &lt; 4, hide me!</li>
+    <li data-qif="value lt 6">5 &lt; 6</li>
+    <li data-qif="value eq 5">5 == 5</li>
+    <li data-qif="value ne 5">5 != 5, hide me!</li>
+    <li data-qif="not:truthy">not true, hide me!</li>
+    <li data-qif="text cn brown">"brown fox jumped" contains "brown"</li>
+    <li data-qif="text nc brown">"brown fox jumped" doesn't contain "brown", hide me!</li>
+    <li data-qif="text cn bird">"brown fox jumped" contains "bird", hide me!</li>
+    <li data-qif="text nc bird">"brown fox jumped" doesn't contain "bird"</li>
+  </ul>
+</td>
+
+<td class="box"><h2>Test QATTR with className</h2>
+  <span data-qattr="class klass">make class .bluish</span><br>
+  <span data-qattr="style ztyle">make css pink</span>
+</td>
+
+<td class="box"><h2>Test QATTR</h2>
+  <input type="text" size=30 value="...." data-qattr="value indented.indented.cool"><br>
+  <textarea rows=2 cols=15 data-qattr="value text"></textarea>
+  <input type="checkbox" data-qattr="checked truthy">
+  <input type="button" value="disable me" data-qattr="disabled truthy"><br>
+  <a href="javascript:void(0);" data-qattr="href homepage title text" title="see tooltip" data-qtext="text">see tooltip</a>
+</td>
+
+</tr>
+</table>
+
+</body>
+</html>

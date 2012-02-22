@@ -92,17 +92,35 @@ function distal(root, obj) {
     }
 
     //shown if object is truthy
-    //e.g., <img qif="item.unread">
+    //e.g., <img qif="item.unread"> <img qif="item.count gt 1">
 
     attr = node.getAttribute(qif);
     if(attr) {
-      if( (attr2 = (attr.indexOf("not:") == 0)) ) attr = attr.substr(5);
-      var obj2 = resolve(obj, attr);
+      attr = attr.split(" ");
+      if(attr[0].indexOf("not:") == 0) {
+        attr = [attr[0].substr(4), "not", 0];
+      }
 
+      var obj2 = resolve(obj, attr[0]);
       //if obj is empty array it is still truthy, so make it the array length
-      if(obj2 && obj2.length > -1) obj2 = !!obj2.length;
+      if(obj2 && obj2.join && obj2.length > -1) obj2 = obj2.length;
 
-      if(!!obj2 ^ attr2) {
+      if(attr.length > 2) {
+        if(typeof obj2 == "number") attr[2] *= 1;
+
+        switch(attr[1]) {
+          case "not": attr = !obj2; break;
+          case "eq": attr = (obj2 == attr[2]); break;
+          case "ne": attr = (obj2 != attr[2]); break;
+          case "gt": attr = (obj2 > attr[2]); break;
+          case "lt": attr = (obj2 < attr[2]); break;
+          case "cn": attr = (obj2 && obj2.indexOf(attr[2]) >= 0); break;
+          case "nc": attr = (obj2 && obj2.indexOf(attr[2]) < 0); break;
+          default: throw node;
+        }
+      }
+
+      if(attr) {
         node.style.display = "";
       } else {
         node.style.display = "none";
@@ -284,7 +302,7 @@ function distal(root, obj) {
         attr = attr.split(" ");
         node.innerHTML = resolve(obj, attr[1]) || "";
       } else {
-        node["value" in node ? "value" : innerText] = resolve(obj, attr) || "";
+        node["form" in node ? "value" : innerText] = resolve(obj, attr) || "";
       }
     }
   }  //end while
