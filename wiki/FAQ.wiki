@@ -1,4 +1,5 @@
 #summary Frequently Asked Questions
+#labels Featured
 
 ===What's with the name?===
 Distal is an acronym for Dynamic Interface Simplified with Template Attribute Language. Distal also represents the "distance" between the data and the user interface as being a valley that is difficult to cross. Distal also happens to be phonetically similar to "distill" which patrons the notion of distilling data into the HTML tree.
@@ -31,8 +32,10 @@ Add a callback function to Distal like this:
 <code language=javascript>
 distal.beforeAttr = function(node, attName, newAttValue) { 
 }; 
+
 distal.beforeText = function(node, newText) { 
 };</code>
+This is also a convenient place to drop in your animation functions.
 Make sure your callback function doesn't throw exceptions or else Distal will stop.
 
 ===Does it work with jQuery?===
