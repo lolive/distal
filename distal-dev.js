@@ -25,10 +25,12 @@ function distal(root, obj) {
   //optimize comparison check
   var innerText = "innerText" in root ? "innerText" : "textContent";
   //attributes which don't support setAttribute()
-  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, label:1, htmlFor:1, text:1, disabled:1};
+  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, selected:1, label:1, htmlFor:1, text:1, disabled:1};
 
   //TAL attributes for querySelectorAll call
   var qdef = distal;
+  var beforeAttr = qdef.beforeAttr;
+  var beforeText = qdef.beforeText;
   var qif = qdef.qif || "data-qif";
   var qrepeat = qdef.qrepeat || "data-qrepeat";
   var qattr = qdef.qattr || "data-qattr";
@@ -184,6 +186,7 @@ function distal(root, obj) {
         for(var i = len; i > 0; i--) html[len - i] = i;
 
         tmpNode = node.cloneNode(true);
+        if("form" in tmpNode) tmpNode.checked = false;
         tmpNode.setAttribute(qdef, attr);
         tmpNode.removeAttribute(qrepeat);
         tmpNode.setAttribute("qdup", "1");
@@ -262,7 +265,9 @@ function distal(root, obj) {
             frag.appendChild(html);
           }
         }
-        node.parentNode.insertBefore(frag, node.nextSibling);
+        html = node.parentNode;
+        html.insertBefore(frag, node.nextSibling);
+        html.selectedIndex = -1;
       }
     }
 
@@ -271,26 +276,31 @@ function distal(root, obj) {
 
     attr = node.getAttribute(qattr);
     if(attr) {
-      attr = attr.split(" ");
-      var name;
-      var value;
-      for(var i = attr.length - 1; i >= 0; i-=2) {
-        name = attr[i - 1];
-        value = resolve(obj, attr[i]);
-        if(altAttr[name]) {
-          switch(name) {
-            case "innerHTML": throw node;
-            case "disabled":
-            case "checked": node[name] = !!value; break;
-            case "style": node.style.cssText = value; break;
-            case "text": node[querySelectorAll ? name : innerText] = value; break;  //option.text unstable in IE
-            case "class": name = "className";
-            default: node[name] = value;
+      html = attr.split("; ");
+      while(html[0]) {
+        attr = html.shift().split(" ");
+        var name;
+        var value;
+        for(var i = attr.length - 1; i >= 0; i-=2) {
+          name = attr[i - 1];
+          value = resolve(obj, attr[i]);
+          if(beforeAttr) beforeAttr(node, name, value);
+          if(altAttr[name]) {
+            switch(name) {
+              case "innerHTML": throw node;
+              case "disabled":
+              case "checked":
+              case "selected": node[name] = !!value; break;
+              case "style": node.style.cssText = value; break;
+              case "text": node[querySelectorAll ? name : innerText] = value; break;  //option.text unstable in IE
+              case "class": name = "className";
+              default: node[name] = value;
+            }
+          } else {
+            node.setAttribute(name, value);
           }
-        } else {
-          node.setAttribute(name, value);
         }
-      }
+      }  //end while
     }
 
     //sets the innerHTML on the node
@@ -299,10 +309,13 @@ function distal(root, obj) {
     attr = node.getAttribute(qtext);
     if(attr) {
       if(attr.indexOf("html ") == 0) {
-        attr = attr.split(" ");
-        node.innerHTML = resolve(obj, attr[1]) || "";
+        attr = resolve(obj, attr.split(" ")[1]) || "";
+        if(beforeText) beforeText(node, attr);
+        node.innerHTML = attr;
       } else {
-        node["form" in node ? "value" : innerText] = resolve(obj, attr) || "";
+        attr = resolve(obj, attr) || "";
+        if(beforeText) beforeText(node, attr);
+        node["form" in node ? "value" : innerText] = attr;
       }
     }
   }  //end while
