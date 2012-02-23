@@ -30,11 +30,8 @@ This also helps if you want shorten the attribute names to reduce file size.
 ===How can I hook into Distal to perform some action before a node is modified?===
 Add a callback function to Distal like this:
 <code language=javascript>
-distal.beforeAttr = function(node, attName, newAttValue) { 
-}; 
-
-distal.beforeText = function(node, newText) { 
-};</code>
+distal.beforeAttr = function(node, attName, newAttValue) { /*your function*/ }; 
+distal.beforeText = function(node, newText) { /*your function*/ };</code>
 This is also a convenient place to drop in your animation functions.
 Make sure your callback function doesn't throw exceptions or else Distal will stop.
 
