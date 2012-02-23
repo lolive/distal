@@ -8,7 +8,7 @@ The logo is a database with whipped cream on top. A notion that Distal puts the 
 
 http://code.google.com/p/distal/logo?endswith=.png
 
-===Why do the attributes start with "data"?===
+===Why do the attributes start with "data-"?===
 This is to make the HTML validate against the HTML doctype `<!DOCTYPE html>`.
 
 ===Can I customize the attribute names?===
@@ -25,6 +25,14 @@ distal.qtext = "xtext";
 <div xattr="rss.feeds.title"></div>
 </code>
 This also helps if you want shorten the attribute names to reduce file size.
+
+===How can I hook into Distal to perform some action before a node is modified?===
+Add a callback function to Distal like this:
+<code language=javascript>
+distal.beforeAttr = function(node, attName, newAttValue) { 
+}; 
+distal.beforeText = function(node, newText) { 
+};</code>
 
 ===Does it work with jQuery?===
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
