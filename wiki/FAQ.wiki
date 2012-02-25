@@ -9,8 +9,8 @@ The logo is a database with whipped cream on top. A notion that Distal puts the 
 
 http://code.google.com/p/distal/logo?endswith=.png
 
-===Why do the attributes start with "data-"?===
-This is to make the HTML validate against the HTML doctype `<!DOCTYPE html>`.
+===Will my page validate against the W3C validator?===
+Yes, provided that you use the latest HTML doctype `<!DOCTYPE html>`. This doctype allows the use of arbitrary "data-" attributes in your HTML. Another advantage is that because your HTML validates, your Template code will also validate too.
 
 ===Can I customize the attribute names?===
 If the attribute names are incompatible with your existing website, you can change them to your own custom name:
@@ -38,4 +38,4 @@ This is also a good place to drop in your animation code or debugging code. Make
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
 
 ===Do you support progressive enhancement?===
-Yes, because your HTML also doubles as the template! When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it.
+Yes, because your HTML also doubles as the template! When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it. Since the HTML is also the template, you will not have duplicated template code elsewhere.
