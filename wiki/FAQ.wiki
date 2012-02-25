@@ -37,5 +37,5 @@ This is also a good place to drop in your animation code or debugging code. Make
 ===Does it work with jQuery?===
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
 
-===How did you optimize the parsing?===
-For modern browsers I use `querySelectorAll` and for IE6 I use `getElementsByTagName`. Since node access is expensive in IE, I avoid `firstChild, nextSibling`, and `parentNode` whenever possible. I use `innerHTML` over `cloneNode` and I use `createDocumentFragment` to group appends together.
+===Do you support progressive enhancement?===
+Yes, because your HTML also doubles as the template! When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it.
