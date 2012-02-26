@@ -12,6 +12,9 @@ http://code.google.com/p/distal/logo?endswith=.png
 ===Will my page validate against the W3C validator?===
 Yes, provided that you use the latest HTML doctype `<!DOCTYPE html>`. This doctype allows the use of arbitrary "data-" attributes in your HTML. Another advantage is that because your HTML validates, your Template code will also validate too.
 
+===Where do i define the HTML snippets that go into the webpage?===
+Distal works differently than traditional string based templates. Traditionally you put HTML inside a string and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
+ 
 ===Can I customize the attribute names?===
 If the attribute names are incompatible with your existing website, you can change them to your own custom name:
 <code language="javascript">
