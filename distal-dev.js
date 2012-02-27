@@ -288,7 +288,7 @@ function distal(root, obj) {
         name = attr[0];
         value = resolve(obj, attr[1]) || "";
         if(beforeAttr) beforeAttr(node, name, value);
-        if((attr = format[attr[2]])) value = attr(value);
+        if((attr = attr[2] && format[attr[2]])) value = attr(value);
         if(altAttr[name]) {
           switch(name) {
             case "innerHTML": throw node;
@@ -317,7 +317,7 @@ function distal(root, obj) {
       attr2 = resolve(obj, attr[html ? 1 : 0]) || "";
 
       if(beforeText) beforeText(node, attr2);
-      if((attr = format[attr[html ? 2 : 1]])) attr2 = attr(attr2);
+      if((attr = attr[html ? 2 : 1]) && (attr = format[attr])) attr2 = attr(attr2);
 
       if(html) {
         node.innerHTML = attr2;
