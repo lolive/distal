@@ -31,7 +31,7 @@ distal.qtext = "xtext";
 This also helps if you want shorten the attribute names to reduce file size.
 
 ===How can I format the data output?===
-You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the last parameter:
+You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the last parameter. Don't forget to separate the last parameter with a space: "[space][comma][dot]":
 <code language="javascript">
 <input data-qattr="value total_cost ,."> 
 <div data-qtext="total_cost ,."></div> </code>
