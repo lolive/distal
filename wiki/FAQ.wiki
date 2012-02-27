@@ -30,6 +30,17 @@ distal.qtext = "xtext";
 </code>
 This also helps if you want shorten the attribute names to reduce file size.
 
+===How can I format the data output?===
+You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the 3rd parameter:
+<code language="javascript">
+<input data-qattr="value total_cost ,."> 
+<div data-qtext="total_cost ,."></div> </code>
+You can define your own formatting function like this:
+<code language="javascript">
+distal.format[".3"] = function(value) { 
+    return value.toFixed(3); 
+};</code>
+
 ===How can I hook into Distal to perform some action before a node is modified?===
 Add a callback function to Distal like this:
 <code language=javascript>
