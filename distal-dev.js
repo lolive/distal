@@ -35,6 +35,10 @@ function distal(root, obj) {
   var qrepeat = qdef.qrepeat || "data-qrepeat";
   var qattr = qdef.qattr || "data-qattr";
   var qtext = qdef.qtext || "data-qtext";
+
+  //output formatter
+  var format = qdef.format;
+
   qdef = qdef.qdef || "data-qdef";
   var TAL = "*[" + [qdef, qif, qrepeat, qattr, qtext].join("],*[") + "]";
   var html;
@@ -272,35 +276,34 @@ function distal(root, obj) {
     }
 
     //set multiple attributes on the node
-    //e.g., <div qattr="value item.text disabled item.disabled">
+    //e.g., <div qattr="value item.text; disabled item.disabled">
 
     attr = node.getAttribute(qattr);
     if(attr) {
+      var name;
+      var value;
       html = attr.split("; ");
-      while(html[0]) {
-        attr = html.shift().split(" ");
-        var name;
-        var value;
-        for(var i = attr.length - 1; i >= 0; i-=2) {
-          name = attr[i - 1];
-          value = resolve(obj, attr[i]);
-          if(beforeAttr) beforeAttr(node, name, value);
-          if(altAttr[name]) {
-            switch(name) {
-              case "innerHTML": throw node;
-              case "disabled":
-              case "checked":
-              case "selected": node[name] = !!value; break;
-              case "style": node.style.cssText = value; break;
-              case "text": node[querySelectorAll ? name : innerText] = value; break;  //option.text unstable in IE
-              case "class": name = "className";
-              default: node[name] = value;
-            }
-          } else {
-            node.setAttribute(name, value);
+      for(var i = html.length - 1; i >= 0; i--) {
+        attr = html[i].split(" ");
+        name = attr[0];
+        value = resolve(obj, attr[1]) || "";
+        if(beforeAttr) beforeAttr(node, name, value);
+        if((attr = format[attr[2]])) value = attr(value);
+        if(altAttr[name]) {
+          switch(name) {
+            case "innerHTML": throw node;
+            case "disabled":
+            case "checked":
+            case "selected": node[name] = !!value; break;
+            case "style": node.style.cssText = value; break;
+            case "text": node[querySelectorAll ? name : innerText] = value; break;  //option.text unstable in IE
+            case "class": name = "className";
+            default: node[name] = value;
           }
+        } else {
+          node.setAttribute(name, value);
         }
-      }  //end while
+      }
     }
 
     //sets the innerHTML on the node
@@ -308,14 +311,18 @@ function distal(root, obj) {
 
     attr = node.getAttribute(qtext);
     if(attr) {
-      if(attr.indexOf("html ") == 0) {
-        attr = resolve(obj, attr.split(" ")[1]) || "";
-        if(beforeText) beforeText(node, attr);
-        node.innerHTML = attr;
+      attr = attr.split(" ");
+
+      html = (attr[0] == "html");
+      attr2 = resolve(obj, attr[html ? 1 : 0]) || "";
+
+      if(beforeText) beforeText(node, attr2);
+      if((attr = format[attr[2]])) attr2 = attr(attr2);
+
+      if(html) {
+        node.innerHTML = attr2;
       } else {
-        attr = resolve(obj, attr) || "";
-        if(beforeText) beforeText(node, attr);
-        node["form" in node ? "value" : innerText] = attr;
+        node["form" in node ? "value" : innerText] = attr2;
       }
     }
   }  //end while
@@ -330,4 +337,13 @@ distal.resolve = function(obj, seq, x) {
   x = 0;
   while(seq[x] && (obj = obj[seq[x++]]) );
   return obj;
+};
+
+//number formatters
+distal.format = {
+  ",.": function(v) {
+    v = v*1;
+    v = v % 1 ? v.toFixed(2) : parseInt(v) + "";
+    return v.replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
+  }
 };

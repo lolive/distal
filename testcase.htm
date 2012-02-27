@@ -10,6 +10,7 @@ var data = {
   emptyList: [],
   nullList: null,
   value: 5,
+  floater: 12345678.333333,
   text: "brown fox jumped",
   klass: "bluish",
   ztyle: "background:pink",
@@ -103,9 +104,10 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 
 <td class="box"><h2>Test QATTR</h2>
   <input type="text" size=30 value="...." data-qattr="value indented.indented.cool; title text"><br>
+  <input type="text" size=20 value="float with commas" data-qattr="value floater ,."><br>
   <textarea rows=2 cols=15 data-qattr="value text"></textarea>
   <input type="checkbox" data-qattr="checked truthy">
-  <input type="button" value="disable me" data-qattr="disabled truthy title text"><br>
+  <input type="button" value="disable me" data-qattr="disabled truthy; title text"><br>
   <a href="javascript:void(0);" data-qattr="href homepage; title text" title="see tooltip" data-qtext="text">see tooltip</a>
 </td>
 
