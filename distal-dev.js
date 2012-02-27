@@ -317,7 +317,7 @@ function distal(root, obj) {
       attr2 = resolve(obj, attr[html ? 1 : 0]) || "";
 
       if(beforeText) beforeText(node, attr2);
-      if((attr = format[attr[2]])) attr2 = attr(attr2);
+      if((attr = format[attr[html ? 2 : 1]])) attr2 = attr(attr2);
 
       if(html) {
         node.innerHTML = attr2;
