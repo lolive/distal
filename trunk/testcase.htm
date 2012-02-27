@@ -28,7 +28,7 @@ ul {list-style-type:square; border:1px dashed #ccc}
 h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin:0 0 0.5em 0}
 .bluish {background:#aaf}
 </style>
-<body>
+<body onload="if(/\bauto=1\b/i.test(location))distal(document.body,data);">
 
 <p><a href="javascript:distal(document.body,data);">Run Distal</a></p>
 
@@ -104,7 +104,7 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 
 <td class="box"><h2>Test QATTR</h2>
   <input type="text" size=30 value="...." data-qattr="value indented.indented.cool; title text"><br>
-  <input type="text" size=20 value="float with commas" data-qattr="value floater ,."><br>
+  <input type="text" size=20 value="float with commas" data-qattr="value floater ,.; title floater ,."><br>
   <textarea rows=2 cols=15 data-qattr="value text"></textarea>
   <input type="checkbox" data-qattr="checked truthy">
   <input type="button" value="disable me" data-qattr="disabled truthy; title text"><br>
