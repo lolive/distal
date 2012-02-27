@@ -10,7 +10,7 @@ var data = {
   emptyList: [],
   nullList: null,
   value: 5,
-  floater: 12345678.333333,
+  floater: 33333.333333,
   text: "brown fox jumped",
   klass: "bluish",
   ztyle: "background:pink",
@@ -64,7 +64,7 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 
 <td class="box"><h2>Test QREPEAT with array null</h2>
   <ul>
-    <li>there will only be 1 bullet
+    <li>there will only be 1 bullet (cost: $<span data-qtext="floater ,.">1,000.00</span>)
       <ol><li data-qrepeat="m nullList" data-qtext="m">(this will not show)</li></ol>
     </li>
   </ul>
