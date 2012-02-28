@@ -35,7 +35,7 @@ You can format floating point numbers to have 2 decimal places and have a thousa
 <code language="javascript">
 <input data-qattr="value total_cost ,."> 
 <div data-qtext="total_cost ,."></div> </code>
-You can define your own formatting function like this:
+You can define your own formatting function like this (but don't use the reserved *`;`* character inside your name):
 <code language="javascript">
 distal.format[".3"] = function(value) { 
     return value.toFixed(3); 
