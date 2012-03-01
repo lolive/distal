@@ -341,9 +341,8 @@ distal.resolve = function(obj, seq, x) {
 
 //number formatters
 distal.format = {
-  ",.": function(v) {
-    v = v*1;
-    v = v % 1 ? v.toFixed(2) : parseInt(v) + "";
-    return v.replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
+  ",.": function(v, i) {
+    i = v*1;
+    return isNaN(i) ? v : (i % 1 ? i.toFixed(2) : parseInt(i) + "").replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
   }
 };
