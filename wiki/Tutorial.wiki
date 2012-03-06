@@ -7,7 +7,8 @@ To use [http://code.google.com/p/distal Distal] you will need:
   # a copy of `distal.js`
 
 =Step 1:=
-Design you webpage however you want the end user to see it. For example:
+Design you webpage however you want the end user to see it. You may use WYSIWYG tools like Dreamweaver, as no Javascript is required. 
+For example:
 <code language="xml">
 <html> 
   <head> 
@@ -44,7 +45,7 @@ Design you webpage however you want the end user to see it. For example:
 </html></code>
 
 =Step 2:=
-Write your state-of-the-art Javascript application that pulls in data from your state-of-the-art backend server. Ideally you have that already or your enterprise already has one and you are tasked with interfacing with it. By now you should have some data in some Javascript variable that you want to update the user interface with. For example you may have this:
+Make your state-of-the-art Javascript application pull in data from your state-of-the-art backend server. Ideally you have that already or your enterprise already has one and you are tasked with interfacing with it. By now you should have some data in some Javascript variable that you want to update the user interface with. For example you may have this:
 <code language="json">
 var statistics = { 
     user: {name: "Bob", profile_url: "/profile?id=12345"}, 
