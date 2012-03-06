@@ -13,7 +13,7 @@ http://code.google.com/p/distal/logo?endswith=.png
 Yes, provided that you use the latest HTML doctype `<!DOCTYPE html>`. This doctype allows the use of arbitrary "data-" attributes in your HTML. Another advantage is that because your HTML validates, your Template code will also validate too.
 
 ===Where do i define the HTML snippets that go into the webpage?===
-Distal works differently than traditional string based templates. Traditionally you put HTML inside a string and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
+Distal works differently than traditional string based templates. Traditionally you put HTML inside a string or a hidden script tag and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
  
 ===Can I customize the attribute names?===
 If the attribute names are incompatible with your existing website, you can change them to your own custom name:
@@ -28,7 +28,6 @@ distal.qtext = "xtext";
 
 <div xattr="rss.feeds.title"></div>
 </code>
-This also helps if you want shorten the attribute names to reduce file size.
 
 ===How can I format the data output?===
 You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the last parameter. Don't forget to separate the last parameter with a space: "(space)(comma)(dot)":
@@ -52,6 +51,9 @@ This is also a good place to drop in your animation code or debugging code. Make
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
 
 ===Do you support progressive enhancement?===
-Yes, because your HTML also doubles as the template. When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it. Other template frameworks do not have this feature as their templates are defined in strings or hidden script tags which are not visible to the user if Javascript is not supported.
+Yes, because your HTML also doubles as your template. When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it. Other template frameworks do not have this feature as their templates are defined in strings or hidden script tags which are not visible to the user if Javascript is not supported.
 
-Another advantage is that your template code is not duplicated in the engine and also in your HTML page.
+Another advantage is that since your HTML is also your template code, you do not have to duplicate your template code in 2 places to achieve progressive enhancement.
+
+===Do you support search engine optimization?===
+Yes, because your HTML also doubles as your template. Since a page that uses Distal looks the same with Javascript and without Javascript, search engines are able to see all the contents in your page without executing Javascript and are able to index your page fully.
