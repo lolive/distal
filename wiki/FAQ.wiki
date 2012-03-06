@@ -50,6 +50,17 @@ This is also a good place to drop in your animation code or debugging code. Make
 ===Does it work with jQuery?===
 Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
 
+===How do I clear our rows from a table that were not generated dynamically?===
+Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be sequentially adjacent to a `qrepeat` node.
+<code language=xml>
+<table>
+  <tr><th>Menu</th></tr>
+  <tr data-qrepeat="m foods"><td>Fries</td></tr>
+  <tr qdup=1><td>Burger</td></tr>
+  <tr qdup=1><td>Coke</td></tr>
+</table>
+</code>
+
 ===Do you support progressive enhancement?===
 Yes, because your HTML also doubles as your template. When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it. Other template frameworks do not have this feature as their templates are defined in strings or in hidden script tags which are not visible to the user if Javascript is not supported.
 
