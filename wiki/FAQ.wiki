@@ -52,9 +52,10 @@ Yes, but note that Distal needs the actual node as the parameter. JQuery by defa
 
 ===How do I clear our rows from a table that were not generated dynamically?===
 Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be sequentially adjacent to a `qrepeat` node.
-<code language=xml><table> 
+<code language=xml>
+<table> 
   <tr><th>Menu</th></tr> 
-  <tr data-qrepeat="m foods"><td>Fries</td></tr> 
+  <tr data-qrepeat="m foods"><td data-qtext="m.name">Fries</td></tr> 
   <tr qdup=1><td>Burger</td></tr> 
   <tr qdup=1><td>Coke</td></tr> 
 </table></code>
