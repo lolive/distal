@@ -5,7 +5,7 @@
 Distal is an acronym for Dynamic Interface Simplified with Template Attribute Language. Distal also represents the "distance" between the data and the user interface as being a valley that is difficult to cross. Distal also happens to be phonetically similar to "distill" which patrons the notion of distilling data into the HTML tree.
 
 ===What's with the logo?===
-The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database), and squeezing our the middle-man. This is not to be taken literally. Always follow the application design rules of abstraction.
+The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database), and squeezing out the middle-man. This is not to be taken literally. Always follow the application design rules of abstraction.
 
 http://code.google.com/p/distal/logo?endswith=.png
 
