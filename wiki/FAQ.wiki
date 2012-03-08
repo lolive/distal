@@ -41,13 +41,14 @@ distal.format[".3"] = function(value) {
 };</code>
 
 ===Can I execute functions attached to JSON objects?===
-Yes, if a property on the JSON object is a function, it will be executed and the return value will be used as the output.
+Yes, if a property on the JSON object is a `function`, it will be executed and the return value will be used as the output.
 <code language="javascript">
 var data = { 
     name: "John", 
     surname: "Smith", 
-    fullname: function () {return this.name + " " + this.surname;} 
+    fullname: function () { return this.name + " " + this.surname; } 
 }; 
+
 distal(node, data);</code>
 
 ===How can I hook into Distal to perform some action before a node is modified?===
