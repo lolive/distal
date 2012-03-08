@@ -329,14 +329,14 @@ function distal(root, obj) {
 }
 
 //follows the dot notation path to find an object within an object: obj["a"]["b"]["1"] = c;
-distal.resolve = function(obj, seq, x) {
+distal.resolve = function(obj, seq, x, lastObj) {
   //if fully qualified path is at top level: obj["a.b.d"] = c
-  if((x = obj[seq])) return x;
+  if((x = obj[seq])) return (typeof x == "function") ? x.call(obj, seq) : x;
 
   seq = seq.split(".");
   x = 0;
-  while(seq[x] && (obj = obj[seq[x++]]) );
-  return obj;
+  while(seq[x] && (lastObj = obj) && (obj = obj[seq[x++]]));
+  return (typeof obj == "function") ? obj.call(lastObj, seq.join(".")) : obj;
 };
 
 //number formatters
