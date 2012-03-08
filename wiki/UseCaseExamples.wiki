@@ -4,13 +4,15 @@ Below are a number of use case examples to demonstrate how to use Distal:
 
 === Updating a section of your page with sports scores ===
 <code language="xml">
+<html>
 <table id="scoreboard"> 
   <tr><th>Team</th><th>Team</th></tr> 
   <tr data-qrepeat="m scores"> 
     <td><span data-qtext="m.ateam.name"></span> - <span data-qtext="m.ateam.score"></span></td> 
     <td><span data-qtext="m.bteam.name"></span> - <span data-qtext="m.bteam.score"></span></td> 
   </tr> 
-</table></code>
+</table> 
+</html></code>
 <code language="javascript">
 distal(document.getElementById("scoreboard"), {scores: [
     {ateam: {name: "JFK", score: 4}, bteam: {name: "LAX", score: 2}},
@@ -20,24 +22,28 @@ distal(document.getElementById("scoreboard"), {scores: [
 ]}); </code>
 ----
 ===Updating toolbar button States===
-<code language="xml"><div id="toolbar"> 
+<code language="xml"><html> 
+<div id="toolbar"> 
   <input type="button" value="Copy" data-qattr="disabled nocopy"> 
   <input type="button" value="Paste" data-qattr="disabled nopaste"> 
   <input type="button" value="Bold" data-qattr="class bold"> 
   <input type="button" value="Italic" data-qattr="class italic"> 
-</div></code>
+</div> 
+</html></code>
 <code language="javascript">
 distal(document.getElementById("toolbar"), {
     nocopy: true, nopaste: false, bold: "b", italic: "i"
 }); </code>
 ----
 ===Flipping through content===
-<code language="xml"><div data-qif="page1"> 
+<code language="xml"><html> 
+<div data-qif="page1"> 
   Welcome! Click "Next" to start. 
 </div> 
 <div data-qif="page2"> 
   Your generated password is: <span data-qtext="page2.pwd"> </span> 
-</div></code>
+</div> 
+</html></code>
 <code language="javascript">
 distal(document.body, { 
     page1: null, 
