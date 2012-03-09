@@ -51,7 +51,7 @@ var data = {
 
 distal(node, data); 
 
-<div data-qtext="data.fullname">test</div></code>
+<div data-qtext="fullname">test</div></code>
 
 ===How can I hook into Distal to perform some action before a node is modified?===
 Add a callback function to Distal like this:
