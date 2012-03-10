@@ -13,6 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 function distal(root, obj) {
+  "use strict";
   //create a duplicate object which we can add properties to without affecting the original
   var wrapper = new Function();
   wrapper.prototype = obj;
@@ -186,8 +187,8 @@ function distal(root, obj) {
         //we need to duplicate this node x number of times. But instead
         //of calling cloneNode x times, we get the outerHTML and repeat
         //that x times, then innerHTML it which is faster
-        html = new Array(objList.length - 1), len = html.length;
-        for(var i = len; i > 0; i--) html[len - i] = i;
+        html = new Array(objList.length - 1);
+        for(var len = html.length, i = len; i > 0; i--) html[len - i] = i;
 
         tmpNode = node.cloneNode(true);
         if("form" in tmpNode) tmpNode.checked = false;
