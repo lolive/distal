@@ -2,6 +2,8 @@
 #labels Featured
 Below are a number of use case examples to demonstrate how to use Distal:
 
+<wiki:toc  />
+
 === Updating a section of your page with sports scores ===
 <code language="xml">
 <html> 
