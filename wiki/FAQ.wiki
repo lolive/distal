@@ -1,7 +1,8 @@
 #summary Frequently Asked Questions
 #labels Featured
 
-<wiki:toc max_depth="1" />
+===Table of Contents===
+<wiki:toc />
 
 ===What's with the name?===
 Distal is an acronym for Dynamic Interface Simplified with Template Attribute Language. Distal also represents the "distance" between the data and the user interface as being a valley that is difficult to cross. Distal also happens to be phonetically similar to "distill" which patrons the notion of distilling data into the HTML tree.
