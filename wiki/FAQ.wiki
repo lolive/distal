@@ -1,6 +1,5 @@
 #summary Frequently Asked Questions
 #labels Featured
-<wiki:toc max_depth="1" />
 
 ===What's with the name?===
 Distal is an acronym for Dynamic Interface Simplified with Template Attribute Language. Distal also represents the "distance" between the data and the user interface as being a valley that is difficult to cross. Distal also happens to be phonetically similar to "distill" which patrons the notion of distilling data into the HTML tree.
@@ -62,7 +61,16 @@ distal.beforeText = function(node, newText) { /*your function*/ };</code>
 This is also a good place to drop in your animation code or debugging code. Make sure your callback function doesn't throw exceptions or else Distal will stop.
 
 ===Does it work with jQuery?===
-Yes, but note that Distal needs the actual node as the parameter. JQuery by default, does not return actual nodes, but returns arrays. You need to call it like `distal($("table")[0], data)` and not like `distal($("table"), data)`.
+If you want to take advantage of jQuery chains, you can include this line after you pull in Distal:
+<code language="javascript">
+<script src="jquery.js"></script> 
+<script src="distal.js"></script> 
+<script> 
+jQuery.fn.distal = function (json) { 
+    return this.each( function () { distal(this, json) } ) 
+}; 
+</script></code>
+Afterwards you can call Distal like this `$("body").distal( {welcome_msg: "hello world"} );`.
 
 ===How do I clear our rows from a table that were not generated dynamically?===
 Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be sequentially adjacent to a `qrepeat` node.
