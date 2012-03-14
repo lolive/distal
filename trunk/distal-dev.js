@@ -347,3 +347,6 @@ distal.format = {
     return isNaN(i) ? v : (i % 1 ? i.toFixed(2) : parseInt(i) + "").replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
   }
 };
+
+//support RequireJS module pattern
+if(typeof define == "function" && define.amd) define("distal", function() {return distal;});
