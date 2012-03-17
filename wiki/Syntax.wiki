@@ -1,4 +1,5 @@
 #summary Syntax and API
+#labels Featured
 =Table of Contents=
 <wiki:toc />
 
