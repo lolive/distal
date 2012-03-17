@@ -1,0 +1,90 @@
+#summary Syntax and API
+=Table of Contents=
+<wiki:toc />
+
+==What is JSON object==
+This is a Javascript object derived from a JSON string. The JSON string is typically downloaded from the server asynchronously after the user has already visited the page. It contains up to date information often based on input collected from the user in real-time.
+
+For the follow syntax examples, we will be implying the use of an object with these properties:
+<code language="json">{
+  subject: "The Hitchhiker's Guide to the Galaxy",
+  date: "<i>1978</i>",
+  unread: true,
+  priority: "urgent",
+  bookmarks: {
+    url: "www.google.com"
+  },
+  keywords: [
+    {name: "Brilliant"}, {name: "Masterpiece"}, {name: "Witty"}
+  ]
+}</code>
+
+==Modifying a node's contents==
+You can set a node's content with the *`data-qtext`* attribute and the property name as the parameter.
+<code language="xml">
+<div data-qtext="subject"></div> 
+<input type="text" data-qtext="subject"></code>
+<code language="xml">
+<div>The Hitchhiker's Guide to the Galaxy</div> 
+<input type="text" value="The Hitchhiker's Guide to the Galaxy"></code>
+You can also set HTML content into a node with the `data-qtext` attribute and *`html`* as the first parameter.
+<code language="xml">
+<div data-qtext="html date"><i>1978</i></div></code>
+
+==Setting a node's attributes==
+You can set a node's attribute with the *`data-qattr`* attribute. Set the attribute name as the first parameter and the property name as the second parameter.
+<code language="xml">
+<a href="" data-qattr="href bookmarks.url"></a> 
+<input type="checkbox" data-qattr="checked unread"> 
+<input type="button" data-qattr="disabled unread"> 
+<div class="" data-qattr="class priority"></div></code>
+You can set *multiple* attributes.
+<code language="xml"><a href="" class="" data-qattr="class priority; href bookmarks.url"></div></code>
+
+==Show or hide a node==
+You can make a node visible or hidden (style.display = "none") with the *`data-qif`* attribute.
+<code language="xml"><div data-qif="unread">You have unread messages</div> 
+<div data-qif="not:unread">You don't have unread messages</div> 
+<input data-qif="priority eq urgent" type="submit" value="Message is Urgent"></code>
+Notice you can use the comparators `not, eq, ne, gt, lt, cn, nc` for negation, equals, not equals, greater than, less than, contains, and, not contains.
+
+==Defining a shortcut==
+You can define a shortcut with the *`data-qdef`* attribute.
+<code language="xml"><div data-qdef="m forest.trees"> 
+  <div data-qtext="m.title"></div> 
+  <div data-qtext="m.date"></div> 
+</div></code>
+This attribute cannot be used on the same node with a `data-qrepeat` attribute, but it can be used on its parent or children.
+
+==Repeat a node multiple times==
+You can repeat a node multiple times based on an array of objects with the *`data-qrepeat`* attribute. It works with all HTML elements.
+<code language="xml">
+<html> 
+<table> 
+  <tr><th>Opinions</th></tr> 
+  <tr data-qrepeat="m keywords"><td data-qtext="m.name"></td></tr> 
+</table> 
+</html></code>
+<code language="xml">
+<html> 
+<table> 
+  <tr><th>Opinions</th></tr> 
+  <tr><td>Brilliant</td></tr> 
+  <tr><td>Masterpiece</td></tr> 
+  <tr><td>Witty</td></tr> 
+</table> 
+</html></code>
+If the array of objects is empty or null, the node will be hidden via `style.display = "none"`, similar in behavior to the `data-qif` attribute.
+
+==Access nested properties==
+If your data is nested inside multiple properties of the JSON object, you can use the dot notation to reach the nested data.
+<code language="xml">{ 
+    rss: { 
+        feeds: { 
+            count: "42"
+        }
+    }
+}
+
+<div data-qtext="rss.feeds.count"></div></code>
+To access index 3 of an array named `books`, do `books.3.title`.
