@@ -1,6 +1,6 @@
 #summary Use Cases for Distal
 #labels Featured
-Below are a number of use case examples to demonstrate how to use Distal:
+Below are a number of use case examples to demonstrate how to use Distal. For more information, check out the [http://code.google.com/p/distal/w/list wiki page]:
 
 <wiki:toc  />
 
