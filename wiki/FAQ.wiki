@@ -13,37 +13,6 @@ http://code.google.com/p/distal/logo?endswith=.png
 
 ===Where do I define the HTML snippets that go into the webpage?===
 Distal works differently than traditional string based templates. Traditionally you put HTML inside a string or a hidden script tag and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
- 
-===How can I format the data output into numerical form?===
-You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the last parameter. Don't forget to separate the last parameter with a space: "(space)(comma)(dot)":
-<code language="javascript">
-<input data-qattr="value total_cost ,."> 
-<div data-qtext="total_cost ,."></div> </code>
-You can define your own formatting function like this (but don't use the reserved *`;`* character inside your name):
-<code language="javascript">
-distal.format[".3"] = function(value) { 
-    return value.toFixed(3); 
-};</code>
-
-===Can I execute functions attached to JSON objects?===
-Yes, if a property on the JSON object is a `function`, it will be executed and the return value will be used as the output. You need to leave out the parenthesis.
-<code language="javascript">
-var data = { 
-    name: "John", 
-    surname: "Smith", 
-    fullname: function () { return this.name + " " + this.surname; } 
-}; 
-
-distal(node, data); 
-
-<div data-qtext="fullname">test</div></code>
-
-===How can I hook into Distal to perform some action before a node is modified?===
-Add a callback function to Distal like this:
-<code language=javascript>
-distal.beforeAttr = function(node, attName, newAttValue) { /*your function*/ }; 
-distal.beforeText = function(node, newText) { /*your function*/ };</code>
-This is also a good place to drop in your animation code or debugging code. Make sure your callback function doesn't throw exceptions or else Distal will stop.
 
 ===How do I clear our rows from a table that were not generated dynamically (pre-rendered)?===
 Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be next to the `qrepeat` node without breaks in between.
