@@ -7,32 +7,14 @@
 ===What's with the name?===
 Distal is an acronym for Dynamic Interface Simplified with Template Attribute Language. Distal also represents the "distance" between the data and the user interface as being a valley that is difficult to cross. Distal also happens to be phonetically similar to "distill" which patrons the notion of distilling data into the HTML tree.
 
-===What's with the logo?===
-The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database), and squeezing out the middle-man. This is not to be taken literally. Always follow the application design rules of abstraction.
+The logo is a database with whipped cream on top. A notion that Distal puts the user interface (whipped cream) right next to the data (database), and squeezing out the middle-man. This is not to be taken literally. Always follow the proper design patterns of abstraction.
 
 http://code.google.com/p/distal/logo?endswith=.png
 
-===Will my page validate against the W3C validator?===
-Yes, provided that you use the latest HTML doctype `<!DOCTYPE html>`. This doctype allows the use of arbitrary "data-" attributes in your HTML. Another advantage is that because your HTML validates, your Template code will also validate too.
-
-===Where do i define the HTML snippets that go into the webpage?===
+===Where do I define the HTML snippets that go into the webpage?===
 Distal works differently than traditional string based templates. Traditionally you put HTML inside a string or a hidden script tag and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
  
-===Can I customize the attribute names?===
-If the attribute names are incompatible with your existing website, you can change them to your own custom name:
-<code language="javascript">
-<script src="distal.js"></script> 
-<script> 
-distal.qdef = "xdef"; 
-distal.qattr = "xattr"; 
-distal.qtext = "xtext"; 
-//... etc.
-</script>
-
-<div xattr="rss.feeds.title"></div>
-</code>
-
-===How can I format the data output?===
+===How can I format the data output into numerical form?===
 You can format floating point numbers to have 2 decimal places and have a thousandth separator by adding *`,.`* as the last parameter. Don't forget to separate the last parameter with a space: "(space)(comma)(dot)":
 <code language="javascript">
 <input data-qattr="value total_cost ,."> 
@@ -44,7 +26,7 @@ distal.format[".3"] = function(value) {
 };</code>
 
 ===Can I execute functions attached to JSON objects?===
-Yes, if a property on the JSON object is a `function`, it will be executed and the return value will be used as the output.
+Yes, if a property on the JSON object is a `function`, it will be executed and the return value will be used as the output. You need to leave out the parenthesis.
 <code language="javascript">
 var data = { 
     name: "John", 
@@ -75,7 +57,7 @@ jQuery.fn.distal = function (json) {
 </script></code>
 Afterwards you can call Distal like this `$("body").distal( {welcome_msg: "hello world"} );`.
 
-===How do I clear our rows from a table that were not generated dynamically?===
+===How do I clear our rows from a table that were not generated dynamically (pre-rendered)?===
 Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be sequentially adjacent to a `qrepeat` node.
 <code language=xml>
 <table> 
@@ -84,6 +66,10 @@ Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must b
   <tr qdup=1><td>Burger</td></tr> 
   <tr qdup=1><td>Coke</td></tr> 
 </table></code>
+This is useful if you want the list to be pre-rendered by the server, and need Distal to clear out the list before filling it with new data.
+
+===Will my page validate against the W3C validator?===
+Yes, provided that you use the latest HTML doctype `<!DOCTYPE html>`. This doctype allows the use of arbitrary "data-" attributes in your HTML. Another advantage is that because your HTML validates, your Template code will also validate too.
 
 ===Do you support progressive enhancement?===
 Yes, because your HTML also doubles as your template. When your page first loads, it will have all the data and HTML in place for older browsers to view. If the browser supports Javascript, when you call Distal it will modify the current page to insert new data inside it. Other template frameworks do not have this feature as their templates are defined in strings or in hidden script tags which are not visible to the user if Javascript is not supported.
@@ -92,3 +78,17 @@ Another advantage is that since your HTML is also your template code, you do not
 
 ===Do you support search engine optimization?===
 Yes, because your HTML also doubles as your template. Since a page that uses Distal looks the same with Javascript and without Javascript, search engines are able to see all the contents in your page without executing Javascript and are able to fully index your page.
+
+===Can I customize the attribute names?===
+If the attribute names are incompatible with your existing website, you can change them to your own custom name:
+<code language="javascript">
+<script src="distal.js"></script> 
+<script> 
+distal.qdef = "xdef"; 
+distal.qattr = "xattr"; 
+distal.qtext = "xtext"; 
+//... etc.
+</script>
+
+<div xattr="rss.feeds.title"></div>
+</code>
