@@ -2,7 +2,7 @@
 =Table of Contents=
 <wiki:toc />
 
-==What is JSON object==
+=What is a JSON object=
 This is a Javascript object derived from a JSON string. The JSON string is typically downloaded from the server asynchronously after the user has already visited the page. It contains up to date information often based on input collected from the user in real-time.
 
 For the follow syntax examples, we will be implying the use of an object with these properties:
@@ -18,6 +18,8 @@ For the follow syntax examples, we will be implying the use of an object with th
     {name: "Brilliant"}, {name: "Masterpiece"}, {name: "Witty"}
   ]
 }</code>
+
+=DOM attributes=
 
 ==Modifying a node's contents==
 You can set a node's content with the *`data-qtext`* attribute and the property name as the parameter.
