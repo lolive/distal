@@ -15,13 +15,13 @@ http://code.google.com/p/distal/logo?endswith=.png
 Distal works differently than traditional string based templates. Traditionally you put HTML inside a string or a hidden script tag and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
 
 ===How do I clear our rows from a table that were not generated dynamically (pre-rendered)?===
-Add a `qdup` attribute to the rows to be cleared out. Note that the nodes must be next to the `qrepeat` node without breaks in between.
+Add a `data-qdup` attribute to the rows to be cleared out. Note that the nodes must be next to the `qrepeat` node without breaks in between.
 <code language=xml>
 <table> 
   <tr><th>Menu</th></tr> 
   <tr data-qrepeat="m foods"><td data-qtext="m.name">Fries</td></tr> 
-  <tr qdup=1><td>Burger</td></tr> 
-  <tr qdup=1><td>Coke</td></tr> 
+  <tr data-qdup=1><td>Burger</td></tr> 
+  <tr data-qdup=1><td>Coke</td></tr> 
 </table></code>
 This is useful if you want the list to be pre-rendered by the server, and need Distal to clear out the list before filling it with new data.
 
