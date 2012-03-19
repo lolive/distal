@@ -135,4 +135,4 @@ Add a *`data-qdup`* attribute to the rows to be cleared out. Note that the nodes
 </table></code>
 This is useful if you want the list to be pre-rendered by the server, and need Distal to clear out the list before filling it with new data.
 
-This is not limited to table nodes and can be used on any node next to a `qrepeat` node.
+This is not limited to table nodes and can be used on any type of node that is next to a `qrepeat` node.
