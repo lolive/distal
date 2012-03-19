@@ -36,6 +36,7 @@ function distal(root, obj) {
   var qrepeat = qdef.qrepeat || "data-qrepeat";
   var qattr = qdef.qattr || "data-qattr";
   var qtext = qdef.qtext || "data-qtext";
+  var qdup = qdef.qdup || "data-qdup";
 
   //output formatter
   var format = qdef.format;
@@ -49,7 +50,7 @@ function distal(root, obj) {
   //there may be generated node that are siblings to the root node if the root node 
   //itself was a repeater. Remove them so we don't have to deal with them later
   var tmpNode = root.parentNode;
-  while((node = root.nextSibling) && node.nodeType == 1 && (node.qdup || node.getAttribute("qdup"))) {
+  while((node = root.nextSibling) && node.nodeType == 1 && (node.qdup || node.getAttribute(qdup))) {
     tmpNode.removeChild(node);
   }
 
@@ -68,7 +69,7 @@ function distal(root, obj) {
   if(querySelectorAll) {
     //remove all generated nodes (repeats), so we don't have to deal with them later.
     //Only need to do this for non-live NodeLists.
-    list = root.querySelectorAll("*[qdup]");
+    list = root.querySelectorAll("*[" + qdup + "]");
     while((node = list[pos++])) node.parentNode.removeChild(node);
     pos = 0;
   }
@@ -156,7 +157,7 @@ function distal(root, obj) {
       //if live NodeList, remove adjacent repeated nodes
       if(!querySelectorAll) {
         html = node.parentNode;
-        while((tmpNode = node.nextSibling) && tmpNode.nodeType == 1 && (tmpNode.qdup || tmpNode.getAttribute("qdup"))) {
+        while((tmpNode = node.nextSibling) && tmpNode.nodeType == 1 && (tmpNode.qdup || tmpNode.getAttribute(qdup))) {
           html.removeChild(tmpNode);
         }
       }
@@ -194,7 +195,7 @@ function distal(root, obj) {
         if("form" in tmpNode) tmpNode.checked = false;
         tmpNode.setAttribute(qdef, attr);
         tmpNode.removeAttribute(qrepeat);
-        tmpNode.setAttribute("qdup", "1");
+        tmpNode.setAttribute(qdup, "1");
         tmpNode = tmpNode.outerHTML || 
           doc.createElement("div").appendChild(tmpNode).parentNode.innerHTML;
 
@@ -292,7 +293,7 @@ function distal(root, obj) {
         if((attr = attr[2] && format[attr[2]])) value = attr(value);
         if(altAttr[name]) {
           switch(name) {
-            case "innerHTML": throw node;
+            case "innerHTML": throw node;  //should use "qtext"
             case "disabled":
             case "checked":
             case "selected": node[name] = !!value; break;
