@@ -118,6 +118,11 @@ distal(node, data);
 <div data-qtext="fullname">test</div></code>
 Make sure your function doesn't throw exceptions or else Distal will stop.
 
+=Calling distal in your code=
+Distal only has 1 public function, which accepts a node and a javascript object as the parameters.
+<code>distal(HTMLNode, Object);</code>
+Distal will parse the given node and all it's descendants, so it is not necessary to call distal on specific descendants. You can break down your webpage into separate sections and call distal separately on non-overlapping sections if you like and also pass in separate javascript objects too. The call is synchronous, so the call won't return till all descendants are processed.
+
 =Advanced usage=
 ==How can I hook into Distal to perform some action before a node is modified?==
 Add a callback function to Distal like this:
