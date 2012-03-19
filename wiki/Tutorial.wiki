@@ -84,8 +84,8 @@ Go back to your HTML and add distal attributes to all the elements which contain
       <li data-qif="not:tools">Sorry, you're not eligible to rent tools!</li> 
       <li data-qrepeat="item tools"> 
         <a href="screwdrivers.html" data-qtext="item.name" data-qattr="item.rent_url">Screw drivers</a> 
-      <li qdup="1"><a href="lugnuts.html">Lug Nuts</a> 
-      <li qdup="1"><a href="spanner.html">Spanner</a> 
+      <li data-qdup="1"><a href="lugnuts.html">Lug Nuts</a> 
+      <li data-qdup="1"><a href="spanner.html">Spanner</a> 
     </ol> 
  
     <div data-qif="rented">Hey, <span data-qtext="user.name">Bob</span>, don't forget to pay your bills on time!</div> 
