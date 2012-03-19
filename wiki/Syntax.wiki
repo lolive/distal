@@ -60,6 +60,8 @@ You can make a node visible or hidden (style.display = "none") with the *`data-q
 <input data-qif="priority eq urgent" type="submit" value="Message is Urgent"></code>
 Notice you can use the comparators `not, eq, ne, gt, lt, cn, nc` for negation, equals, not equals, greater than, less than, contains, and, not contains.
 
+If a node is to be hidden, it's children will be skipped over (not processed) to improve performance.
+
 ==Defining a shortcut==
 You can define a shortcut with the *`data-qdef`* attribute.
 <code language="xml"><div data-qdef="m forest.trees"> 
