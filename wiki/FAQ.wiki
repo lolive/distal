@@ -14,6 +14,9 @@ http://code.google.com/p/distal/logo?endswith=.png
 ===Where do I define the HTML snippets that go into the webpage?===
 Distal works differently than traditional string based templates. Traditionally you put HTML inside a string or a hidden script tag and add marking symbols and have the engine parse and replace those symbols dynamically before inserting that into your document. Distal works with your existing HTML document. You design your webpage as if it is already filled with data. Then you go back through your webpage and mark which nodes should have its data replaced dynamically. Distal works to modify your web page dynamically.
 
+===Should I use the development version or the compressed version?===
+The compressed version should be used in production as it makes the same functionality available with a smaller overhead which is beneficial to the customer and the server. If you are interested in customizing the tool or folding the tool into your development toolchain, you can download the development version which retains all inline comments and formatting.
+
 ===How do I clear our rows from a table that were not generated dynamically (pre-rendered)?===
 Add a `data-qdup` attribute to the rows to be cleared out. Note that the nodes must be next to the `qrepeat` node without breaks in between.
 <code language=xml>
