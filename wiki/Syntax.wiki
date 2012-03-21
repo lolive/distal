@@ -129,6 +129,8 @@ Add a callback function to Distal like this:
 <code language=javascript>
 distal.beforeAttr = function(node, attName, newAttValue) { /*your function*/ }; 
 distal.beforeText = function(node, newText) { /*your function*/ };</code>
+This callback will not allow you to modify the output. To modify the output, please see [Syntax#Formatting_data_into_numerical_form formatting data].
+
 This is also a good place to drop in your animation code or debugging code. Make sure your callback function doesn't throw exceptions or else Distal will stop.
 
 ==How do I clear our rows from a table that were not generated dynamically (pre-rendered)?==
