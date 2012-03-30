@@ -50,7 +50,7 @@ function distal(root, obj) {
   //there may be generated node that are siblings to the root node if the root node 
   //itself was a repeater. Remove them so we don't have to deal with them later
   var tmpNode = root.parentNode;
-  while((node = root.nextSibling) && node.nodeType == 1 && (node.qdup || node.getAttribute(qdup))) {
+  while((node = root.nextSibling) && (node.qdup || (node.nodeType == 1 && node.getAttribute(qdup)))) {
     tmpNode.removeChild(node);
   }
 
@@ -126,7 +126,7 @@ function distal(root, obj) {
           case "nc": attr = (obj2 && obj2.indexOf(attr[2]) < 0); break;
           default: throw node;
         }
-      }
+      } else attr = obj2;
 
       if(attr) {
         node.style.display = "";
@@ -157,7 +157,7 @@ function distal(root, obj) {
       //if live NodeList, remove adjacent repeated nodes
       if(!querySelectorAll) {
         html = node.parentNode;
-        while((tmpNode = node.nextSibling) && tmpNode.nodeType == 1 && (tmpNode.qdup || tmpNode.getAttribute(qdup))) {
+        while((tmpNode = node.nextSibling) && (tmpNode.qdup || (tmpNode.nodeType == 1 && tmpNode.getAttribute(qdup)))) {
           html.removeChild(tmpNode);
         }
       }
