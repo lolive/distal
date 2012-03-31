@@ -12,15 +12,15 @@ The program accepts 2 parameters: a root node, and an object containing data.
 All variables are initialized to default values. All global variables are saved as local variables to improve performance and to facilitate code compression.
 
 == cleanup ==
-Program calls querySelectorAll to get a list of descendants that were automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Those nodes are removed from the DOM with `removeChild`. If QSA is not supported, this step is skipped.
+Program calls `querySelectorAll` to get a list of descendants that were automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Those nodes are removed from the DOM with `removeChild`. If QSA is not supported, this step is skipped. We do this now because QSA is fast and we won't have to add detection code for them later on.
 
-Program calls querySelectorAll to get a list of descendants that carry the TAL attributes. QSA is supported in most browsers and IE8+. If QSA is not supported, program falls back to getElementsByTagName which is slower but workable. Note that QSA returns a non-live NodeList while GEBTN returns a live NodeList.
+Program calls `querySelectorAll` to get a list of descendants that carry the TAL attributes. QSA is supported in most browsers and IE8+. If QSA is not supported, program falls back to `getElementsByTagName` which is slower but workable. Note that QSA returns a non-live `NodeList` while GEBTN returns a live `NodeList`.
 
 Push the array of descendants on the stack.
 
 == main loop ==
 
-Pop the first array off the stack and loop for each item in the array. Do so without accessing the `length` value of the array (NodeList) as that will trigger a full tree walk-through which is expensive.
+Pop the first array off the stack and loop for each item in the array. Do so without accessing the `length` value of the array (`NodeList`) as that will trigger a full tree walk-through which is expensive.
 
 For each item, call `getAttribute` to try and read the 5 TAL attributes in the specified order: `qdef`, `qif`, `qrepeat`, `qattr`, then `qtext`.
 
@@ -30,18 +30,18 @@ If attribute exists, copy the corresponding value from the data object as a new 
 === read: qif ===
 If attribute exists, find the corresponding value from the data object and compare it against the value in the attribute. If the evaluation is truthy, display the node.
 
-If the evaluation is falsy, hide the node by setting the style to `display:none`. Then skip over the descendants of this node, as the node is hidden and irrelevant. This is tricky as the descendants are also descendants of the main array. We can loop through the remaining indices of the main array and see if they are descendants of the current node (with `contains` or `compareDocumentPosition`), but that is also slow. Instead we call querySelectorAll on the current node and get the length of that list and just skip over that many number of nodes on the main array.
+If the evaluation is falsy, hide the node by setting the style to `display:none`. Then skip over the descendants of this node, as the node is hidden and irrelevant. This is tricky as the descendants are also items of the main array. We can loop through the remaining indices of the main array and see if they are descendants of the current node (using `contains` or `compareDocumentPosition`), but that is also slow. Instead we call `querySelectorAll` on the current node and get the `length` of that list and just skip over that many number of items on the main array.
 
 === read: qrepeat ===
-If attribute exists, do some cleanup first: if the main array is a live Nodelist (created by getElementsByTagName), then we remove all proceeding adjacent nodes that are automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Remove them by calling `removeChild`. We don't need to do this if the main array is a non-list NodeList (created by querySelectorAll) because this operation was done during initialization.
+If attribute exists, do some cleanup first: if the main array is a live `Nodelist` (created by `getElementsByTagName`), then we remove all proceeding adjacent nodes that were automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Remove them by calling `removeChild`. We don't need to do this if the main array is a non-live `NodeList` (created by `querySelectorAll`) because this operation was done during initialization.
 
 Find the corresponding value from the data object, which should be an array type.
 
-If array length is 1, set the one and only item as a shortcut on the root of the data object. Then continue parsing this node. Further calls to fill this node with data will pull the data from the shortcut variable on the data object, bypassing the need to index into the array.
+If array `length` is 1, set the one and only item as a shortcut on the root of the data object. Then continue parsing this node. Further calls to fill this node with data will pull the data from the shortcut variable on the data object, bypassing the need to index into the array.
 
-If array length more than 1, clone the current node, remove the `qrepeat` attribute from the clone and convert it into an HTML string, duplicate this string multiple times according to the length of the array, then call `innerHTML` on the spot adjacent to the node to add all of these nodes there. This is faster than calling `cloneNode` multiple times.
+If array `length` more than 1, clone the current node, remove the `qrepeat` attribute from the clone and convert it into an HTML string, duplicate this string multiple times according to the `length` of the array, then call `innerHTML` on the spot adjacent to the node to add all of these nodes there. This is faster than calling `cloneNode` multiple times.
 
-If the main array is non-live (created by querySelectorAll), we call QSA on all the new generated nodes and push them onto our stack to be processed later.
+If the main array is non-live (created by `querySelectorAll`), we call QSA on all the new generated nodes and push them onto our stack to be processed later.
 
 === read: qattr ===
 If attribute exists, find the corresponding value from the data object and add it as an attribute to the node (`setAttribute`), or assign it directly as a `DOM0` property.
