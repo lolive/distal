@@ -2,8 +2,10 @@
 #labels Phase-Requirements,Phase-Design
 
 = Introduction =
-
 This page is to give developers an idea about how the program logic flows and what choices were made in the design of this program.
+
+= Program Organization =
+The vein of this program is the `querySelectorAll` call (and the fallback to `getElementsByTagName` call) which returns an array (a `NodeList` object to be exact). This native function is fast and browsers optimize the `NodeList` to be lazy loading and lazy walking. This program loops through the array and parses each node one at a time. With `querySelectorAll` only the appropriate nodes containing TAL attributes are retrieved and processed.
 
 = Program Flow =
 == initialization ==
@@ -14,7 +16,7 @@ All variables are initialized to default values. All global variables are saved 
 == cleanup ==
 Program calls `querySelectorAll` to get a list of descendants that were automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Those nodes are removed from the DOM with `removeChild`. If QSA is not supported, this step is skipped. We do this now because QSA is fast and we won't have to add detection code for them later on.
 
-Program calls `querySelectorAll` to get a list of descendants that carry the TAL attributes. QSA is supported in most browsers and IE8+. If QSA is not supported, program falls back to `getElementsByTagName` which is slower but workable. Note that QSA returns a non-live `NodeList` while GEBTN returns a live `NodeList`.
+Program calls `querySelectorAll` to get a list of descendants that carry the TAL attributes. QSA is supported in most browsers and IE8+. If QSA is not supported, program falls back to `getElementsByTagName` which is slower but workable (faster than `childNodes` with `nextSibling`). Note that QSA returns a non-live `NodeList` while GEBTN returns a live `NodeList`.
 
 Push the array of descendants on the stack.
 
