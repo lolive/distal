@@ -1,0 +1,23 @@
+#summary Brief overview of the technical structure of the program
+#labels Phase-Requirements,Phase-Design
+
+= Introduction =
+
+This page is to give developers an idea about how the program logic flows and what choices were made in the design of this program.
+
+= Requirements =
+== Functional ==
+
+The program is designed to follow the spirit of the Template Attribute Language (TAL) in the use of related concepts and attributes.
+
+== Non-functional ==
+
+As the program is to be used in a web application environment, speed is important.
+
+Speed is important because the program is executed in a browser which is known to be slow. And since the program is designed to manipulate the user interface, a fast and responsive interface is an important requirement.
+
+= Program Flow =
+== Initialize ==
+All variables are initialized on every execution. There are no global variables except for configuration code such as the `datatype formatter`, `intercept callbacks` and `attribute customizer`.
+
+Copies of global variables are stored as local variables during execution to improve performance.
