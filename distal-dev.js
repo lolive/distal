@@ -218,9 +218,9 @@ function distal(root, obj) {
         } else if("cellIndex" in node) {  //TD
           tmpNode.innerHTML = "<table><tr>" + html + "<\/tr><\/table>";
           tmpNode = tmpNode.firstChild.tBodies[0].firstChild.childNodes;
-        } else if("selected" in node && "text" in node) {  //OPTION
+        } else if("selected" in node && "text" in node) {  //OPTION, OPTGROUP
           tmpNode.innerHTML = "<select>" + html + "<\/select>";
-          tmpNode = tmpNode.firstChild.options;
+          tmpNode = tmpNode.firstChild.childNodes;
         } else {
           tmpNode.innerHTML = html;
           tmpNode = tmpNode.childNodes;
@@ -273,8 +273,8 @@ function distal(root, obj) {
         }
         html = node.parentNode;
         html.insertBefore(frag, node.nextSibling);
-        html.selectedIndex = -1;
       }
+      html.selectedIndex = -1;
     }
 
     //set multiple attributes on the node
