@@ -1,4 +1,4 @@
-#summary Brief overview of the technical structure of the program
+#summary Technical structure of the program
 #labels Phase-Requirements,Phase-Design
 
 = Introduction =
@@ -6,18 +6,39 @@
 This page is to give developers an idea about how the program logic flows and what choices were made in the design of this program.
 
 = Requirements =
-== Functional ==
 
 The program is designed to follow the spirit of the Template Attribute Language (TAL) in the use of related concepts and attributes.
 
-== Non-functional ==
-
-As the program is to be used in a web application environment, speed is important.
-
-Speed is important because the program is executed in a browser which is known to be slow. And since the program is designed to manipulate the user interface, a fast and responsive interface is an important requirement.
+Speed is an important requirement, because the program is executed in a browser which is known to be slow. And since the program is designed to manipulate the user interface, a fast and responsive interface is important.
 
 = Program Flow =
-== Initialize ==
-All variables are initialized on every execution. There are no global variables except for configuration code such as the `datatype formatter`, `intercept callbacks` and `attribute customizer`.
+== Initialization ==
+The program accepts 2 parameters: a root node, and an object containing data.
 
-Copies of global variables are stored as local variables during execution to improve performance.
+All variables are initialized to default values. All global variables are saved as local variables to improve performance and to facilitate code compression.
+
+== querySelectorAll ==
+Program calls querySelectorAll to get a list of descendants that were automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Those nodes are removed from the DOM with `removeChild`. If QSA is not supported, this step is skipped.
+
+Program calls querySelectorAll to get a list of descendants that carry the TAL attributes. QSA is supported in most browsers and IE8+. If QSA is not supported, program falls back to getElementsByTagName which is slower but workable. Note that QSA returns a non-live NodeList while GEBTN returns a live NodeList.
+
+Push the array of descendants on the stack.
+
+== main loop ==
+
+Pop the first array off the stack and loop for each item in the array. Do so without accessing the `length` value of the array (NodeList) as that will trigger a full tree walk-through which is expensive.
+
+For each item, call `getAttribute` to try and read the 5 TAL attributes in the specified order: `qdef`, `qif`, `qrepeat`, `qattr`, then `qtext`.
+
+== qdef ==
+If attribute exists, copy the corresponding value from the data object as a new property at the root of the data object.
+
+=== qif ===
+If attribute exists, find the corresponding value from the data object and compare it against the value in the attribute. If the evaluation is truthy, display the node.
+
+If the evaluation is falsy, hide the node by setting the style to `display:none`. Then skip over the descendants of this node, as the node is hidden and irrelevant. This is tricky as the descendants are also descendants of the main array. We can loop through the remaining indices of the main array and see if they are descendants of the current node (with `contains` or `compareDocumentPosition`), but that is also slow. Instead we call querySelectorAll on the current node and get the length of that list and just skip over that many number of nodes on the main array.
+
+=== qrepeat ===
+If attribute exists, find the corresponding value from the data object, which should be an array type.
+
+Do some cleanup first. If the main array is a live Nodelist (created by getElementsByTagName), then we remove all proceeding adjacent nodes that are automatically generated (nodes with the `dup` attribute) during a previous execution of the program. Remove them by calling `removeChild`.
