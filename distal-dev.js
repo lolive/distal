@@ -273,8 +273,8 @@ function distal(root, obj) {
         }
         html = node.parentNode;
         html.insertBefore(frag, node.nextSibling);
+        html.selectedIndex = -1;
       }
-      html.selectedIndex = -1;
     }
 
     //set multiple attributes on the node
