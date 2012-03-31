@@ -226,7 +226,8 @@ function distal(root, obj) {
           tmpNode = tmpNode.childNodes;
         }
 
-        var frag = doc.createDocumentFragment();
+        prefix = node.parentNode;
+        attr2 = node.nextSibling;
 
         if(querySelectorAll || node == root) {
           //push the current list and index to the stack and process the repeated
@@ -262,18 +263,16 @@ function distal(root, obj) {
             posStack.push(0);
 
             html.qdup = 1;
-            frag.appendChild(html);
+            prefix.insertBefore(html, attr2);
           }
         } else {
           for(var i = tmpNode.length - 1; i >= 0; i--) {
             html = tmpNode[i];
             html.qdup = 1;
-            frag.appendChild(html);
+            prefix.insertBefore(html, attr2);
           }
         }
-        html = node.parentNode;
-        html.insertBefore(frag, node.nextSibling);
-        html.selectedIndex = -1;
+        prefix.selectedIndex = -1;
       }
     }
 
