@@ -58,6 +58,9 @@ Another advantage is that since your HTML is also your template code, you do not
 ===Do you support search engine optimization?===
 Yes, because your HTML also doubles as your template. Since a page that uses Distal looks the same with Javascript and without Javascript, search engines are able to see all the contents in your page without executing Javascript and are able to fully index your page.
 
+===Do you work well with external widgets?===
+Yes, because Distal does not replace existing nodes in the webpage. This plays well with widgets, which rely on creating additional nodes dynamically for the widget to function. Many template systems work by replacing a large chunk of the webpage each time which may break an already initialized widget.  
+
 ===Do you support rapid prototyping?===
 One hallmark of rapid prototyping is to forgo efficiency in exchange for quick development. With distal you can quickly call the API with minimal coding by passing in the root node as the parameter. Once your prototype is done, you can go back and improve efficiency by selecting more specific nodes (nodes with less branches) to call distal.
 
