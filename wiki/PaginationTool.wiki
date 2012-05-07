@@ -12,7 +12,7 @@ function ArrayPaginator(arr) {
 ArrayPaginator.prototype = { 
   currentPageNumber: 1, 
   currentPageSize: 0, 
-  pageSize: 5, 
+  pageSize: 20, 
   pageCount: 0, 
   pages: null, 
   isLastPage: false, 
@@ -55,4 +55,5 @@ data.items.pages = new ArrayPaginator(data.items);
     <td data-qtext="m.value"></td> 
   </tr> 
 </table> 
+Page <span data-qtext="items.pages.currentPageNumber"></span> of <span data-qtext="items.pages.pageCount"></span> 
 </code>
