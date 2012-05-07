@@ -4,6 +4,8 @@
 
 If you need to show a long list using Distal, you many want to split the long list into pages. You can do this with a simple paginator script.
 
+See this [http://distal.googlecode.com/svn/trunk/distal_paginate.htm Demo].
+
 = Script =
 <code language="javascript">
 function ArrayPaginator(arr) { 
@@ -27,7 +29,7 @@ ArrayPaginator.prototype = {
     this.remaining = this.source.length < this.pageSize ? 0 : 
       Math.max(0, this.source.length - this.currentPageNumber*this.pageSize); 
  
-    this.currentPageSize = this.remaining >= 0 ? this.pageSize : 
+    this.currentPageSize = this.remaining > 0 ? this.pageSize : 
       this.source.length % this.pageSize; 
  
     var curPageIndex = this.currentPageNumber - 1; 
@@ -44,16 +46,16 @@ ArrayPaginator.prototype = {
 = Usage=
 <code language=javascript>
 var data = {
-    items: [{value: "A"}, {value: "B"}, {value: "C"}, {value: "D"}]
+    list: [{value: "A"}, {value: "B"}, {value: "C"}, {value: "D"}]
 };
-data.items.pages = new ArrayPaginator(data.items);
+data.list.pages = new ArrayPaginator(data.list);
 </code>
 
 <code language=xml>
 <table> 
-  <tr data-qrepeat="m items.pages"> 
+  <tr data-qrepeat="m list.pages"> 
     <td data-qtext="m.value"></td> 
   </tr> 
 </table> 
-Page <span data-qtext="items.pages.currentPageNumber"></span> of <span data-qtext="items.pages.pageCount"></span> 
+Page <span data-qtext="list.pages.currentPageNumber"></span> of <span data-qtext="list.pages.pageCount"></span> 
 </code>
