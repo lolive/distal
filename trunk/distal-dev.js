@@ -26,7 +26,7 @@ function distal(root, obj) {
   //optimize comparison check
   var innerText = "innerText" in root ? "innerText" : "textContent";
   //attributes which don't support setAttribute()
-  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, selected:1, label:1, htmlFor:1, text:1, disabled:1};
+  var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, selected:1, label:1, htmlFor:1, text:1, title:1, disabled:1};
 
   //TAL attributes for querySelectorAll call
   var qdef = distal;
@@ -344,7 +344,7 @@ distal.resolve = function(obj, seq, x, lastObj) {
 distal.format = {
   ",.": function(v, i) {
     i = v*1;
-    return isNaN(i) ? v : (i % 1 ? i.toFixed(2) : parseInt(i) + "").replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
+    return isNaN(i) ? v : (i % 1 ? i.toFixed(2) : parseInt(i, 10) + "").replace(/(^\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1,");
   }
 };
 
