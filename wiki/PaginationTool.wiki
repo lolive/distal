@@ -20,8 +20,9 @@ ArrayPaginator.prototype = {
   pages: null, 
   isLastPage: false, 
  
-  update: function() { 
+  update: function(num) { 
     this.pageCount = Math.ceil(this.source.length / this.pageSize); 
+    if(num) this.currentPageNumber = num*1; 
  
     if(this.currentPageNumber < 1 || this.currentPageNumber*this.pageSize > this.source.length) { 
       this.currentPageNumber = this.pageCount; 
