@@ -114,6 +114,7 @@ function distal(root, obj) {
       if(obj2 && obj2.join && obj2.length > -1) obj2 = obj2.length;
 
       if(attr.length > 2) {
+        if(attr[3]) attr[2] = attr.slice(2).join(" ");
         if(typeof obj2 == "number") attr[2] *= 1;
 
         switch(attr[1]) {
