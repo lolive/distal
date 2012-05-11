@@ -10,6 +10,7 @@ See this [http://distal.googlecode.com/svn/trunk/distal_paginate.htm Demo].
 <code language="javascript">
 function ArrayPaginator(arr) { 
   this.source = arr; 
+  this.update(); 
 } 
 ArrayPaginator.prototype = { 
   currentPageNumber: 1, 
