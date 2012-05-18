@@ -77,3 +77,6 @@ distal.qtext = "xtext";
 
 <div xattr="rss.feeds.title"></div>
 </code>
+
+===Why do some images get duplicated for a few seconds?===
+If you are dynamically changing the source of an image using `qattr` and that image is inside a repeated node, when you call Distal, the repeated node will be cloned X number of times and a new image source will be assigned to the image. However, in some browsers assigning a new image source will temporarily keep the old image in place until the new image source has downloaded. This is a browser specific behavior. It is analogous to changing images on mouse over, but the new image was not preloaded, so the old image stays visible, until the new image is available.
