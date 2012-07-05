@@ -163,6 +163,7 @@ function distal(root, obj) {
         }
       }
 
+      if(!attr2[1]) throw attr2;
       var objList = resolve(obj, attr2[1]);
 
       if(objList && objList.length) {
@@ -288,6 +289,7 @@ function distal(root, obj) {
       for(var i = html.length - 1; i >= 0; i--) {
         attr = html[i].split(" ");
         name = attr[0];
+        if(!attr[1]) throw attr;
         value = resolve(obj, attr[1]) || "";
         if(beforeAttr) beforeAttr(node, name, value);
         if((attr = attr[2] && format[attr[2]])) value = attr(value);
