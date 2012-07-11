@@ -15,7 +15,7 @@ limitations under the License. */
 function distal(root, obj) {
   "use strict";
   //create a duplicate object which we can add properties to without affecting the original
-  var wrapper = new Function();
+  var wrapper = function() {};
   wrapper.prototype = obj;
   obj = new wrapper();
 
