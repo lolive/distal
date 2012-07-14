@@ -104,6 +104,16 @@ If your data is nested inside multiple properties of the JSON object, you can us
 <div data-qtext="rss.feeds.count"></div></code>
 To access index 3 of an array named `books`, do `books.3.title`.
 
+==Getting the index location in an array==
+If you are repeated a node with the `data-qrepeat`, you can access the current index location by using "`#`" as the property name. (First row starts at "1".)
+<code language="xml"> 
+<div data-qrepeat="m list">Row <b data-qtext="#"></b></div> 
+ 
+<div>Row <b>1</b></div> 
+<div>Row <b>2</b></div> 
+<div>Row <b>3</b></div> 
+</code> 
+
 ==Calling functions attached to objects==
 Yes, if a property on the JSON object is a `function`, it will be executed and the return value will be used as the output. You need to *leave out* the parenthesis.
 <code language="javascript">
