@@ -96,7 +96,15 @@ function distal(root, obj) {
     if(attr) {
       attr = attr.split(" ");
       //add it to the object as a property
-      obj[attr[0]] = resolve(obj, attr[1]);
+      html = resolve(obj, attr[1]);
+
+      //the 3rd parameter if exists is a numerical index into the array
+      if((attr2 = attr[2])) {
+        obj["#"] = parseInt(attr2) + 1;
+        html = html[attr2];
+      }
+
+      obj[attr[0]] = html;
     }
 
     //shown if object is truthy
@@ -171,6 +179,7 @@ function distal(root, obj) {
         //allow this node to be treated as index zero in the repeat list
         //we do this by setting the shortcut variable to array[0]
         obj[attr2[0]] = objList[0];
+        obj["#"] = 1;
 
       } else {
         //we need to hide the repeat node if the object doesn't resolve
@@ -207,8 +216,8 @@ function distal(root, obj) {
         if(prefix == -1) prefix = tmpNode.indexOf(" "+qdef+"='" + attr + "'");
         prefix = prefix + qdef.length + 3 + attr.length;
 
-        html = tmpNode.substr(0, prefix) + "." + 
-          html.join(tmpNode.substr(prefix) + tmpNode.substr(0, prefix) + ".") + 
+        html = tmpNode.substr(0, prefix) + " " + 
+          html.join(tmpNode.substr(prefix) + tmpNode.substr(0, prefix) + " ") + 
           tmpNode.substr(prefix);
 
         tmpNode = doc.createElement("div");
@@ -243,7 +252,7 @@ function distal(root, obj) {
           //use it to assign our repeat variable to array index 0 so that the node's
           //children, which are also at array index 0, will be processed correctly
           list = {getAttribute:getProp};
-          list[qdef] = attr + ".0";
+          list[qdef] = attr + " 0";
           listStack.push([list]);
           posStack.push(0);
 
