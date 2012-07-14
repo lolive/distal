@@ -30,7 +30,6 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 .bluish {background:#aaf}
 </style>
 <body onload="if(/\bauto=1\b/i.test(location))distal(document.body,data);">
-
 <p><a href="javascript:distal(document.body,data);">Run Distal</a></p>
 
 <table cellspacing=5 border=0 width="100%">
@@ -50,7 +49,7 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 </td>
 
 <td class="box"><h2>Test QREPEAT with SELECT</h2>
-  <select size=4>
+  <select size=7>
     <option data-qrepeat="m list" data-qattr="text m">(There will be 3 options)</option>
     <optgroup data-qrepeat="m list" data-qattr="label m" label="(and 3 groups)"><option data-qattr="text m"></option></optgroup>
   </select>
@@ -76,8 +75,8 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 
 <td class="box"><h2>Test QREPEAT with table</h2>
   <table border=1>
-    <tr><th>Age</th></tr>
-    <tr data-qrepeat="m list"><td data-qtext="m">(test)</td></tr>
+    <tr><th>#</th><th>Age</th></tr>
+    <tr data-qrepeat="m list"><td data-qtext="#"></td><td data-qtext="m">(test)</td></tr>
   </table>
 </td>
 
@@ -96,7 +95,7 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
     <li data-qif="value eq 5">5 == 5</li>
     <li data-qif="value ne 5">5 != 5, hide me!</li>
     <li data-qif="not:truthy">not true, hide me!</li>
-    <li data-qif="text cn brown">"brown fox jumped" contains "brown"</li>
+    <li data-qif="text cn brown fox">"brown fox jumped" contains "brown fox"</li>
     <li data-qif="text nc brown">"brown fox jumped" doesn't contain "brown", hide me!</li>
     <li data-qif="text cn bird">"brown fox jumped" contains "bird", hide me!</li>
     <li data-qif="text nc bird">"brown fox jumped" doesn't contain "bird"</li>
