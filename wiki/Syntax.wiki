@@ -90,6 +90,14 @@ You can repeat a node multiple times based on an array of objects with the *`dat
 </html></code>
 If the array of objects is empty or null, the node will be hidden via `style.display = "none"`, similar in behavior to the `data-qif` attribute.
 
+===Separating items with a comma===
+If you are using *`data-qrepeat`* and would like to separate items with a *comma*, you can use the conditional to add the comma for each item other than the first item. i.e.,:
+<code language="xml">
+<span data-qrepeat="m keywords"> 
+  <b data-qif="# ne 1">, </b> 
+  <b data-qtext="m.name"></b> 
+</span></code>
+
 =JSON object=
 ==Access nested properties==
 If your data is nested inside multiple properties of the JSON object, you can use the dot notation to reach the nested data.
@@ -105,7 +113,7 @@ If your data is nested inside multiple properties of the JSON object, you can us
 To access index 3 of an array named `books`, do `books.3.title`.
 
 ==Getting the index location in an array==
-If you are repeated a node with the `data-qrepeat`, you can access the current index location by using "`#`" as the property name. (First row starts at "1".)
+If you are repeated a node with the `data-qrepeat`, you can access the current index location by using "`#`" as the property name. (First row starts at "1")
 <code language="xml"> 
 <div data-qrepeat="m list">Row <b data-qtext="#"></b></div> 
  
