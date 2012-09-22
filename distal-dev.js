@@ -335,7 +335,7 @@ function distal(root, obj) {
       if(html) {
         node.innerHTML = attr2;
       } else {
-        node["form" in node ? "value" : innerText] = attr2;
+        node["form" in node && node.type != "button" ? "value" : innerText] = attr2;
       }
     }
   }  //end while
