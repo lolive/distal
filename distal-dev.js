@@ -63,6 +63,7 @@ function distal(root, obj) {
   var pos = 0;
   var attr;
   var attr2;
+  var undefined = {}._;
 
   //get a list of concerned nodes within this root node. If querySelectorAll is
   //supported we use that but it is treated differently because it is a non-live NodeList.
@@ -299,7 +300,8 @@ function distal(root, obj) {
         attr = html[i].split(" ");
         name = attr[0];
         if(!attr[1]) throw attr;
-        value = resolve(obj, attr[1]) || "";
+        value = resolve(obj, attr[1]);
+        if(value == undefined) value = "";
         if(beforeAttr) beforeAttr(node, name, value);
         if((attr = attr[2] && format[attr[2]])) value = attr(value);
         if(altAttr[name]) {
@@ -327,7 +329,8 @@ function distal(root, obj) {
       attr = attr.split(" ");
 
       html = (attr[0] == "html");
-      attr2 = resolve(obj, attr[html ? 1 : 0]) || "";
+      attr2 = resolve(obj, attr[html ? 1 : 0]);
+      if(attr2 == undefined) attr2 = "";
 
       if(beforeText) beforeText(node, attr2);
       if((attr = attr[html ? 2 : 1]) && (attr = format[attr])) attr2 = attr(attr2);
