@@ -27,6 +27,7 @@ function distal(root, obj) {
   var innerText = "innerText" in root ? "innerText" : "textContent";
   //attributes which don't support setAttribute()
   var altAttr = {className:1, "class":1, innerHTML:1, style:1, src:1, href:1, id:1, value:1, checked:1, selected:1, label:1, htmlFor:1, text:1, title:1, disabled:1};
+  var formInputHasBody = {BUTTON:1, LABEL:1};
 
   //TAL attributes for querySelectorAll call
   var qdef = distal;
@@ -338,7 +339,7 @@ function distal(root, obj) {
       if(html) {
         node.innerHTML = attr2;
       } else {
-        node["form" in node && node.type != "button" ? "value" : innerText] = attr2;
+        node["form" in node && !formInputHasBody[node.tagName] ? "value" : innerText] = attr2;
       }
     }
   }  //end while
