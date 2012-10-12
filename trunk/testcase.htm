@@ -52,7 +52,7 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 <td class="box"><h2>Test QREPEAT with SELECT</h2>
   <select size=7>
     <option data-qrepeat="m list" data-qattr="text m">(There will be 3 options)</option>
-    <optgroup data-qrepeat="m list" data-qattr="label m" label="(and 3 groups)"><option data-qattr="text m"></option></optgroup>
+    <optgroup data-qrepeat="m list" data-qattr="label m" label="(and 3 groups)"><option data-qtext="m"></option></optgroup>
   </select>
 </td>
 
@@ -110,8 +110,11 @@ h2 {background-color:#eee; text-align:center; font-size:1em; padding:3px; margin
 
 <td class="box"><h2>Test QATTR</h2>
   <input type="text" size=30 value="...." data-qattr="value indented.indented.cool; title indented.indented.func"><br>
-  <input type="text" size=20 value="float with commas" data-qattr="value floater ,.; title floater ,."><br>
-  <input type="text" size=10 value="(zero)" data-qtext="emptyList.length"><br>
+  <fieldset>
+    <legend data-qtext="text">(...)</legend>
+    <input type="text" size=20 value="float with commas" data-qattr="value floater ,.; title floater ,.">
+    <input type="text" size=10 value="(zero)" data-qtext="emptyList.length">
+  </fieldset>
   <textarea rows=2 cols=15 data-qattr="value text" title="ok"></textarea><br>
   <u><label for="tt" data-qtext="text">Label</label>:</u> <input id="tt" type="checkbox" data-qattr="checked truthy" title="ok"><br>
   <input type="button" value="disable me" data-qattr="disabled truthy; title text">
