@@ -29,9 +29,9 @@ ArrayPaginator.prototype = {
     } 
  
     this.remaining = this.source.length < this.pageSize ? 0 : 
-      Math.max(0, this.source.length - this.currentPageNumber*this.pageSize); 
+      this.source.length - this.currentPageNumber*this.pageSize; 
  
-    this.currentPageSize = this.remaining > 0 ? this.pageSize : 
+    this.currentPageSize = this.remaining >= 0 ? this.pageSize : 
       this.source.length % this.pageSize; 
  
     var curPageIndex = this.currentPageNumber - 1; 
