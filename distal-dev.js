@@ -225,7 +225,7 @@ function distal(root, obj) {
         tmpNode = doc.createElement("div");
 
         //workaround for IE which can't innerHTML tables and selects
-        if("cells" in node) {  //TR
+        if("cells" in node && !("tBodies" in node)) {  //TR
           tmpNode.innerHTML = "<table>" + html + "<\/table>";
           tmpNode = tmpNode.firstChild.tBodies[0].childNodes;
         } else if("cellIndex" in node) {  //TD
