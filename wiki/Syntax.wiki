@@ -53,6 +53,8 @@ distal.format[".3"] = function(value) {
     return value.toFixed(3); 
 };</code>
 
+Also see [http://code.google.com/p/distal/wiki/Formatters Formatters].
+
 ==Show or hide a node==
 You can make a node visible or hidden (style.display = "none") with the *`data-qif`* attribute.
 <code language="xml"><div data-qif="unread">You have unread messages</div> 
